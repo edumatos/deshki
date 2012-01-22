@@ -1,0 +1,7 @@
+E:\Work\deshki\serverside\Serverside Code\Game Code\bin\Release\Deshki.dll
+E:\Work\deshki\serverside\Serverside Code\Game Code\bin\Release\Deshki.pdb
+E:\Work\deshki\serverside\Serverside Code\Game Code\bin\Release\Player.IO GameLibrary.dll
+E:\Work\deshki\serverside\Serverside Code\Game Code\bin\Release\Player.IO GameLibrary.xml
+E:\Work\deshki\serverside\Serverside Code\Game Code\obj\Release\ResolveAssemblyReference.cache
+E:\Work\deshki\serverside\Serverside Code\Game Code\obj\Release\Deshki.dll
+E:\Work\deshki\serverside\Serverside Code\Game Code\obj\Release\Deshki.pdb
