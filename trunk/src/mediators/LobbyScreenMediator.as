@@ -64,9 +64,9 @@ package mediators
 			dispatch(new ContextEvent(ApplicationContext.CONNECT, name));
 		}
 		
-		private function createRoomButtonClickedHandler(name:String):void
+		private function createRoomButtonClickedHandler(name:String, hideHistory:Boolean):void
 		{
-			dispatch(new ContextEvent(ApplicationContext.CREATE_ROOM, name));
+			dispatch(new ContextEvent(ApplicationContext.CREATE_ROOM, {name:name, hideHistory:hideHistory}));
 		}
 		
 		private function joinRoomButtonClickedHandler(roomInfo:RoomInfo):void

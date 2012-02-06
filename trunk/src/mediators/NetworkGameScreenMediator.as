@@ -117,7 +117,9 @@ package mediators
 				}
 				else
 				{
-					networkGameScreen.gameField.setNumber(lastMove.x, lastMove.y, gameProxy.lastMoveNumber);
+					if(gameProxy.hideHistory)
+						networkGameScreen.gameField.clearNumbers();
+					networkGameScreen.gameField.setCell(lastMove.x, lastMove.y, String(gameProxy.lastMoveNumber));
 				}
 			}
 			networkGameScreen.gameField.clearSelections();
@@ -137,7 +139,7 @@ package mediators
 			}
 			else if(gameProxy.state == Game.EVEN_WON || gameProxy.state == Game.ODD_WON)
 			{
-				if(gameProxy.current == GameProxy.NETWORK)
+				if((gameProxy.state == Game.EVEN_WON && roomProxy.myUserId==roomProxy.evenUserId) || (gameProxy.state == Game.ODD_WON && roomProxy.myUserId==roomProxy.oddUserId))
 				{
 					networkGameScreen.stateLabelText = "Вы победили!";
 				}

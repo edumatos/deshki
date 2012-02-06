@@ -38,9 +38,9 @@ package mediators
 			localGameSettingsScreen.startButtonClicked.remove(startButtonClickedHandler);
 		}
 		
-		private function startButtonClickedHandler(isEvenHuman:Boolean, isOddHuman:Boolean):void
+		private function startButtonClickedHandler(isEvenHuman:Boolean, isOddHuman:Boolean, hideHistory:Boolean):void
 		{
-			dispatch(new ContextEvent(ApplicationContext.DISPLAY_LOCAL_GAME_SCREEN, {isEvenHuman:isEvenHuman, isOddHuman:isOddHuman}));
+			dispatch(new ContextEvent(ApplicationContext.DISPLAY_LOCAL_GAME_SCREEN, {isEvenHuman:isEvenHuman, isOddHuman:isOddHuman, hideHistory:hideHistory}));
 		}
 	}
 }

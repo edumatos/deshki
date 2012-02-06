@@ -133,11 +133,12 @@ package entities
 		 * Проверяет можно ли выполнить ход.
 		 * @param x Координата ячейки по горизонтали, начиная с нуля.
 		 * @param y Координата ячейки по вертикали, начиная с нуля.
+		 * @param hideHistory Учитывать ли предыдущие ходы.
 		 * @return true, если ход можно выполнить.
 		 */
-		public function canMove(x:int, y:int):Boolean
+		public function canMove(x:int, y:int, hideHistory:Boolean = false):Boolean
 		{
-			if(_state!=IN_PROGRESS || (x<0 || x>=4 || y<0 || y>=4) || _field[y*4+x])
+			if(_state!=IN_PROGRESS || (x<0 || x>=4 || y<0 || y>=4) || (!hideHistory && _field[y*4+x]))
 				return false;
 			if(_history.length>0)
 			{
@@ -151,9 +152,10 @@ package entities
 		
 		/**
 		 * Возвращает возможные в текущем состоянии ходы.
+		 * @param hideHistory Учитывать ли предыдущие ходы.
 		 * @return Возможные ходы.
 		 */
-		public function getPossibleMoves():Vector.<Move>
+		public function getPossibleMoves(hideHistory:Boolean = false):Vector.<Move>
 		{
 			var moves:Vector.<Move> = new Vector.<Move>();
 			var i:int, x:int, y:int;
@@ -161,7 +163,7 @@ package entities
 			{
 				x = i%4;
 				y = i/4;
-				if(canMove(x,y))
+				if(canMove(x,y,hideHistory))
 					moves.push(new Move(x, y));
 			}
 			return moves;
@@ -175,14 +177,21 @@ package entities
 		 */
 		public function doMove(x:int, y:int):void
 		{
+			if(_field[y*4+x])
+			{
+				_state = (_history.length-1)%2==0 ? EVEN_WON : ODD_WON;
+				return;
+			}
+			
 			_field[y*4+x] = true;
 			_history.push(y*4+x);
 			
 			if(_history.length==16)
 			{
 				_state = DRAW;
+				return;
 			}
-			else if(!canMove(x-2, y) &&
+			if(!canMove(x-2, y) &&
 				!canMove(x-1, y) &&
 				!canMove(x+1, y) &&
 				!canMove(x+2, y) &&

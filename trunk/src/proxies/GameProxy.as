@@ -50,6 +50,8 @@ package proxies
 		private var _evenTime:int;
 		private var _oddTime:int;
 		
+		private var _hideHistory:Boolean;
+		
 		public function GameProxy()
 		{
 			_game = new Game();
@@ -95,13 +97,19 @@ package proxies
 			return _game.lastMoveNumber;
 		}
 		
+		public function get hideHistory():Boolean
+		{
+			return _hideHistory;
+		}
+		
 		/**
 		 * @param even От кого ожидают ход чётные.
 		 * @param odd От кого ожидают ход нечётные.
 		 */
-		public function reset(even:int, odd:int, totalTime:int):void
+		public function reset(hideHistory:Boolean, even:int, odd:int, totalTime:int):void
 		{
 			_game.reset();
+			_hideHistory = hideHistory;
 			_even = even;
 			_odd = odd;
 			_current = _even;
@@ -114,7 +122,7 @@ package proxies
 		
 		public function getPossibleMoves():Vector.<Move>
 		{
-			return _game.getPossibleMoves();
+			return _game.getPossibleMoves(_current==HUMAN && _hideHistory);
 		}
 		
 		public function get evenTime():Number
@@ -151,7 +159,7 @@ package proxies
 		
 		public function doMove(x:int, y:int):void
 		{
-			if(_game.canMove(x,y))
+			if(_game.canMove(x,y,_hideHistory))
 			{
 				_game.doMove(x,y);
 				

@@ -23,6 +23,7 @@ package components
 	import org.osflash.signals.Signal;
 	
 	import razor.controls.Button;
+	import razor.controls.CheckBox;
 	import razor.controls.Label;
 	import razor.controls.RadioButton;
 	import razor.controls.RadioGroup;
@@ -37,6 +38,7 @@ package components
 		private var _oddHumanRadioButton:RadioButton;
 		private var _oddComputerRadioButton:RadioButton;
 		private var _startButton:Button;
+		private var _hideHistoryCheckBox:CheckBox;
 		
 		public var startButtonClicked:Signal;
 		
@@ -88,7 +90,12 @@ package components
 			_startButton.addEventListener(Button.E_CLICK, startButtonClickedHandler);
 			addChild(_startButton);
 			
-			startButtonClicked = new Signal(Boolean, Boolean);
+			_hideHistoryCheckBox = ControlFactory.create(CheckBox) as CheckBox;
+			_hideHistoryCheckBox.label = "Скрывать историю ходов";
+			_hideHistoryCheckBox.setSize(200, 30);
+			addChild(_hideHistoryCheckBox);
+			
+			startButtonClicked = new Signal(Boolean, Boolean, Boolean);
 			
 			addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 		}
@@ -113,11 +120,13 @@ package components
 			
 			_startButton.x = (stage.stageWidth-_startButton.width)*0.5;
 			_startButton.y = stage.stageHeight*0.5+100;
+			
+			_hideHistoryCheckBox.move((stage.stageWidth-_hideHistoryCheckBox.width)*0.5, 70);
 		}
 		
 		private function startButtonClickedHandler(e:Event):void
 		{
-			startButtonClicked.dispatch(_evenHumanRadioButton.selected, _oddHumanRadioButton.selected);
+			startButtonClicked.dispatch(_evenHumanRadioButton.selected, _oddHumanRadioButton.selected, _hideHistoryCheckBox.selected);
 		}
 	}
 }

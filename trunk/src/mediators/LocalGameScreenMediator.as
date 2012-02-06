@@ -81,15 +81,17 @@ package mediators
 			}
 			else
 			{
-				localGameScreen.gameField.setNumber(lastMove.x, lastMove.y, gameProxy.lastMoveNumber);
+				if(gameProxy.hideHistory)
+					localGameScreen.gameField.clearNumbers();
+				localGameScreen.gameField.setCell(lastMove.x, lastMove.y, String(gameProxy.lastMoveNumber));
 			}
 			localGameScreen.gameField.clearSelections();
 			if(gameProxy.state == Game.IN_PROGRESS)
 			{
 				localGameScreen.stateLabelText = ((gameProxy.lastMoveNumber+1)%2==0 ? "Ход чётных" : "Ход нечётных");
-				var moves:Vector.<Move> = gameProxy.getPossibleMoves();
 				if(gameProxy.current == GameProxy.HUMAN)
 				{
+					var moves:Vector.<Move> = gameProxy.getPossibleMoves();
 					for(var i:int=0; i<moves.length; ++i)
 						localGameScreen.gameField.setSelection(moves[i].x, moves[i].y);
 				}

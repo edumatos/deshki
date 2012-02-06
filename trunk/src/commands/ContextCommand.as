@@ -111,7 +111,7 @@ package commands
 			var gameProxy:GameProxy = injector.getInstance(GameProxy) as GameProxy;
 			var even:int = (event.body.isEvenHuman as Boolean) ? GameProxy.HUMAN : GameProxy.COMPUTER;
 			var odd:int = (event.body.isOddHuman as Boolean) ? GameProxy.HUMAN : GameProxy.COMPUTER;
-			gameProxy.reset(even, odd, 5*60*1000);
+			gameProxy.reset(event.body.hideHistory as Boolean, even, odd, 5*60*1000);
 		}
 		
 		private function handleDoMove():void
@@ -142,7 +142,7 @@ package commands
 		private function handleCreateRoom():void
 		{
 			var playerIOService:PlayerIOService = injector.getInstance(PlayerIOService) as PlayerIOService;
-			playerIOService.createAndJoinRoom(event.body as String, "Deshki", true, null, null);
+			playerIOService.createAndJoinRoom(event.body.name as String, "Deshki", true, {hideHistory:event.body.hideHistory as Boolean}, null);
 		}
 		
 		private function handleJoinRoom():void

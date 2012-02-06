@@ -175,18 +175,18 @@ package commands
 		{
 			var gameProxy:GameProxy = injector.getInstance(GameProxy) as GameProxy;
 			var roomProxy:RoomProxy = injector.getInstance(RoomProxy) as RoomProxy;
-			roomProxy.setUserRoles(message.getInt(0), message.getInt(1));
+			roomProxy.setUserRoles(message.getInt(1), message.getInt(2));
 			if(roomProxy.myUserId==roomProxy.evenUserId)
 			{
-				gameProxy.reset(GameProxy.HUMAN, GameProxy.NETWORK, 5*60*1000);
+				gameProxy.reset(message.getBoolean(0), GameProxy.HUMAN, GameProxy.NETWORK, message.getInt(3));
 			}
 			else if(roomProxy.myUserId==roomProxy.oddUserId)
 			{
-				gameProxy.reset(GameProxy.NETWORK, GameProxy.HUMAN, 5*60*1000);
+				gameProxy.reset(message.getBoolean(0), GameProxy.NETWORK, GameProxy.HUMAN, message.getInt(3));
 			}
 			else
 			{
-				gameProxy.reset(GameProxy.NETWORK, GameProxy.NETWORK, 5*60*1000);
+				gameProxy.reset(message.getBoolean(0), GameProxy.NETWORK, GameProxy.NETWORK, message.getInt(3));
 			}
 		}
 		
