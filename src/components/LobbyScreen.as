@@ -25,6 +25,7 @@ package components
 	import playerio.RoomInfo;
 	
 	import razor.controls.Button;
+	import razor.controls.CheckBox;
 	import razor.controls.Label;
 	import razor.controls.List;
 	import razor.controls.TextInput;
@@ -42,6 +43,7 @@ package components
 		private var _createRoomButton:Button;
 		private var _joinRoomButton:Button;
 		private var _refreshButton:Button;
+		private var _hideHistoryCheckBox:CheckBox;
 		
 		public var connectButtonClicked:Signal;
 		public var createRoomButtonClicked:Signal;
@@ -102,8 +104,13 @@ package components
 			_refreshButton.addEventListener(Button.E_CLICK, refreshButtonClickedHandler);
 			addChild(_refreshButton);
 			
+			_hideHistoryCheckBox = ControlFactory.create(CheckBox) as CheckBox;
+			_hideHistoryCheckBox.label = "Скрывать историю ходов";
+			_hideHistoryCheckBox.setSize(200, 30);
+			addChild(_hideHistoryCheckBox);
+			
 			connectButtonClicked = new Signal(String);
-			createRoomButtonClicked = new Signal(String);
+			createRoomButtonClicked = new Signal(String, Boolean);
 			joinRoomButtonClicked = new Signal(RoomInfo);
 			refreshButtonClicked = new Signal();
 			
@@ -137,6 +144,7 @@ package components
 			_createRoomButton.move(200,260);
 			_joinRoomButton.move(300, 260);
 			_refreshButton.move(400,260);
+			_hideHistoryCheckBox.move(0,290);
 		}
 		
 		private function connectButtonClickedHandler(e:Event):void
@@ -146,7 +154,7 @@ package components
 		
 		private function createRoomButtonClickedHandler(e:Event):void
 		{
-			createRoomButtonClicked.dispatch(_roomNameTextInput.text);
+			createRoomButtonClicked.dispatch(_roomNameTextInput.text, _hideHistoryCheckBox.selected);
 		}
 		
 		private function joinRoomButtonClickedHandler(e:Event):void

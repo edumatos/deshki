@@ -66,10 +66,10 @@ package components
 				_selections.removeChildAt(0);
 		}
 		
-		public function setNumber(x:int, y:int, value:int):void
+		public function setCell(x:int, y:int, value:String):void
 		{
 			var textField:TLFTextField = new TLFTextField();
-			var textFormat:TextFormat = new TextFormat("Arial", 32, value%2==0 ? 0x000000 : 0x999999, null, null, null, null, null, TextFormatAlign.CENTER);
+			var textFormat:TextFormat = new TextFormat("Arial", 32, int(value)%2==0 ? 0x000000 : 0x999999, null, null, null, null, null, TextFormatAlign.CENTER);
 			textField.selectable = false;
 			textField.defaultTextFormat = textFormat;
 			textField.verticalAlign = VerticalAlign.MIDDLE;
@@ -77,7 +77,7 @@ package components
 			textField.height = CELL_SIZE;
 			textField.x = x*CELL_SIZE;
 			textField.y = y*CELL_SIZE;
-			textField.text = String(value);
+			textField.text = value;
 			_numbers.addChild(textField);
 		}
 		

@@ -60,13 +60,14 @@ namespace Deshki {
 
             if (_evenPlayer != null && _oddPlayer != null)
             {
-                _gameModel.Reset();
+                bool hideHistory = Convert.ToBoolean(RoomData["hideHistory"]);
+                _gameModel.Reset(hideHistory);
 
                 _evenPlayer.time = _oddPlayer.time = 0;
                 _time = GetTime();
                 _timer = ScheduleCallback(TimerCallback, TOTAL_TIME);
 
-                Broadcast("Start", _evenPlayer.Id, _oddPlayer.Id);
+                Broadcast("Start", hideHistory, _evenPlayer.Id, _oddPlayer.Id, TOTAL_TIME);
             }
 		}
 
@@ -143,7 +144,7 @@ namespace Deshki {
 
         private int GetTime()
         {
-            return Convert.ToInt32((DateTime.Now - new DateTime(2012, 1, 1)).TotalMilliseconds);
+            return Convert.ToInt32((DateTime.Now - new DateTime(2012, 2, 1)).TotalMilliseconds);
         }
 
         private void SendUserList(Player player)
@@ -193,6 +194,7 @@ namespace Deshki {
         private List<bool> _field;
         private List<int> _history;
         private State _state;
+        private bool _hideHistory;
 
         public GameModel()
         {
@@ -202,13 +204,14 @@ namespace Deshki {
                 false, false, false, false };
             _history = new List<int>(16);
             _state = State.IN_PROGRESS;
+            _hideHistory = false;
         }
 
         public State CurrentState { get { return _state; } }
 
         public int LastMoveNumber { get { return _history.Count - 1; } }
 
-        public void Reset()
+        public void Reset(bool hideHistory)
         {
             for (int i = 0; i < _field.Count; ++i)
             {
@@ -216,6 +219,7 @@ namespace Deshki {
             }
             _history.Clear();
             _state = State.IN_PROGRESS;
+            _hideHistory = hideHistory;
         }
 
         public void Stop()
@@ -225,11 +229,11 @@ namespace Deshki {
 
         public bool CanMove(int x, int y)
         {
-            if(_state!=State.IN_PROGRESS || (x<0 || x>=4 || y<0 || y>=4) || _field[y*4+x])
+            if(_state!=State.IN_PROGRESS || (x<0 || x>=4 || y<0 || y>=4) || (!_hideHistory && _field[y*4+x]))
 				return false;
 			if(_history.Count>0)
 			{
-				int xor = _history[_history.Count-1]^(y*4+x);
+                int xor = _history[_history.Count-1]^(y*4+x);
 				if(!(xor==1 || xor==2 || xor==4 || xor==8))
 					return false;
 			}
@@ -238,14 +242,24 @@ namespace Deshki {
 
         public void DoMove(int x, int y)
         {
+            if (_hideHistory && _field[y * 4 + x])
+            {
+                _state = (_history.Count - 1) % 2 == 0 ? State.EVEN_WON : State.ODD_WON;
+                return;
+            }
+
             _field[y * 4 + x] = true;
             _history.Add(y * 4 + x);
 
             if (_history.Count == 16)
             {
                 _state = State.DRAW;
+                return;
             }
-            else if (!CanMove(x - 2, y) &&
+
+            bool oldHideHistory = _hideHistory;
+            _hideHistory = false;
+            if (!CanMove(x - 2, y) &&
                 !CanMove(x - 1, y) &&
                 !CanMove(x + 1, y) &&
                 !CanMove(x + 2, y) &&
@@ -256,6 +270,7 @@ namespace Deshki {
             {
                 _state = (_history.Count - 1) % 2 == 0 ? State.EVEN_WON : State.ODD_WON;
             }
+            _hideHistory = oldHideHistory;
         }
     }
 }
