@@ -118,7 +118,7 @@ package mediators
 				else
 				{
 					if(gameProxy.hideHistory)
-						networkGameScreen.gameField.clearNumbers();
+						networkGameScreen.gameField.hideNumbers();
 					networkGameScreen.gameField.setCell(lastMove.x, lastMove.y, String(gameProxy.lastMoveNumber));
 				}
 			}
@@ -139,6 +139,9 @@ package mediators
 			}
 			else if(gameProxy.state == Game.EVEN_WON || gameProxy.state == Game.ODD_WON)
 			{
+				if(gameProxy.hideHistory)
+					networkGameScreen.gameField.showNumbers();
+				
 				if((gameProxy.state == Game.EVEN_WON && roomProxy.myUserId==roomProxy.evenUserId) || (gameProxy.state == Game.ODD_WON && roomProxy.myUserId==roomProxy.oddUserId))
 				{
 					networkGameScreen.stateLabelText = "Вы победили!";
@@ -150,6 +153,9 @@ package mediators
 			}
 			else if(gameProxy.state == Game.DRAW)
 			{
+				if(gameProxy.hideHistory)
+					networkGameScreen.gameField.showNumbers();
+				
 				networkGameScreen.stateLabelText = "Ничья!";
 			}
 			else if(gameProxy.state == Game.WAITING)

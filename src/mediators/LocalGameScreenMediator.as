@@ -82,7 +82,7 @@ package mediators
 			else
 			{
 				if(gameProxy.hideHistory)
-					localGameScreen.gameField.clearNumbers();
+					localGameScreen.gameField.hideNumbers();
 				localGameScreen.gameField.setCell(lastMove.x, lastMove.y, String(gameProxy.lastMoveNumber));
 			}
 			localGameScreen.gameField.clearSelections();
@@ -102,14 +102,23 @@ package mediators
 			}
 			else if(gameProxy.state == Game.EVEN_WON)
 			{
+				if(gameProxy.hideHistory)
+					localGameScreen.gameField.showNumbers();
+				
 				localGameScreen.stateLabelText = "Победа чётных!";
 			}
 			else if(gameProxy.state == Game.ODD_WON)
 			{
+				if(gameProxy.hideHistory)
+					localGameScreen.gameField.showNumbers();
+				
 				localGameScreen.stateLabelText = "Победа нечётных!";
 			}
 			else if(gameProxy.state == Game.DRAW)
 			{
+				if(gameProxy.hideHistory)
+					localGameScreen.gameField.showNumbers();
+				
 				localGameScreen.stateLabelText = "Ничья!";
 			}
 		}

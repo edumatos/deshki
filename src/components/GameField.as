@@ -60,6 +60,18 @@ package components
 				_numbers.removeChildAt(0);
 		}
 		
+		public function hideNumbers():void
+		{
+			for(var i:int=0; i<_numbers.numChildren; ++i)
+				_numbers.getChildAt(i).visible = false;
+		}
+		
+		public function showNumbers():void
+		{
+			for(var i:int=0; i<_numbers.numChildren; ++i)
+				_numbers.getChildAt(i).visible = true;
+		}
+		
 		public function clearSelections():void
 		{
 			while(_selections.numChildren>0)
