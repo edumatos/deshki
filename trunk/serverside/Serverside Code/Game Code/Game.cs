@@ -24,7 +24,7 @@ using System.Drawing;
 
 namespace Deshki {
 	public class Player : BasePlayer {
-        public int time;
+        public TimeSpan time;
 	}
 
 	[RoomType("Deshki")]
@@ -33,7 +33,7 @@ namespace Deshki {
         private GameModel _gameModel;
         private Player _evenPlayer;
         private Player _oddPlayer;
-        private int _time;
+        private DateTime _time;
         private Timer _timer;
         private const int TOTAL_TIME = 5 * 60 * 1000;
 		
@@ -63,8 +63,9 @@ namespace Deshki {
                 bool hideHistory = Convert.ToBoolean(RoomData["hideHistory"]);
                 _gameModel.Reset(hideHistory);
 
-                _evenPlayer.time = _oddPlayer.time = 0;
-                _time = GetTime();
+                _evenPlayer.time = new TimeSpan();
+                _oddPlayer.time = new TimeSpan();
+                _time = DateTime.Now;
                 _timer = ScheduleCallback(TimerCallback, TOTAL_TIME);
 
                 Broadcast("Start", hideHistory, _evenPlayer.Id, _oddPlayer.Id, TOTAL_TIME);
@@ -123,14 +124,14 @@ namespace Deshki {
             if (_gameModel.CanMove(x, y))
             {
                 _timer.Stop();
-                int t = GetTime();
+                DateTime t = DateTime.Now;
                 current.time += t - _time;
                 _time = t;
 
                 _gameModel.DoMove(x, y);
 
                 if (_gameModel.CurrentState == GameModel.State.IN_PROGRESS)
-                   _timer = ScheduleCallback(TimerCallback, Math.Max(TOTAL_TIME - next.time, 0));
+                   _timer = ScheduleCallback(TimerCallback, Math.Max(TOTAL_TIME - Convert.ToInt32(next.time.TotalMilliseconds), 0));
 
                 Broadcast(message);
             }
@@ -140,11 +141,6 @@ namespace Deshki {
         {
             _gameModel.Stop();
             Broadcast("TimeIsUp");
-        }
-
-        private int GetTime()
-        {
-            return Convert.ToInt32((DateTime.Now - new DateTime(2012, 2, 1)).TotalMilliseconds);
         }
 
         private void SendUserList(Player player)
