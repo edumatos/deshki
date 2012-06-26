@@ -114,7 +114,7 @@ package mediators
 				if(gameProxy.hideHistory)
 					localGameScreen.gameField.showNumbers();
 				
-				localGameScreen.stateLabelText = ResourceManager.getInstance().getString("MyResources", "odd_turn");
+				localGameScreen.stateLabelText = ResourceManager.getInstance().getString("MyResources", "odd_won");
 			}
 			else if(gameProxy.state == Game.DRAW)
 			{

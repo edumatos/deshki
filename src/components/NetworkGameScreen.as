@@ -59,6 +59,8 @@ package components
 			addChild(_stateLabel);
 			
 			_status = new Status;
+			_status["evenTF"].text = ResourceManager.getInstance().getString("MyResources", "even");;
+			_status["oddTF"].text = ResourceManager.getInstance().getString("MyResources", "odd");;
 			_status["evenName"].text = "";
 			_status["oddName"].text = "";
 			addChild(_status);
