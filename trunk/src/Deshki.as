@@ -17,14 +17,20 @@
 */
 package
 {
+	import context.ApplicationContext;
+	
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.system.Capabilities;
+	
+	import mx.resources.IResourceManager;
+	import mx.resources.ResourceManager;
 	
 	import razor.skins.Settings;
 	import razor.skins.plastic.PlasticStyleSheet;
-	import context.ApplicationContext;
 	
 	[SWF(width="600", height="400")]
+	[ResourceBundle("MyResources")]
 	public class Deshki extends Sprite
 	{
 		private var _context:ApplicationContext;
@@ -44,6 +50,11 @@ package
 		private function init(e:Event = null):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
+			
+			if (Capabilities.language=="ru")
+				ResourceManager.getInstance().localeChain = ['ru_RU'];   
+			else
+				ResourceManager.getInstance().localeChain = ['en_US'];
 			
 			_context = new ApplicationContext(this);
 		}

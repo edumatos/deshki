@@ -21,6 +21,8 @@ package components
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
+	import mx.resources.ResourceManager;
+	
 	import org.osflash.signals.Signal;
 	
 	import razor.controls.Button;
@@ -42,17 +44,17 @@ package components
 			var styleSheet:StyleSheet = ControlFactory.defaultFactory.rootStyleSheet;
 			styleSheet.addRule("title", new StyleSheet({fontSize: 48, bold: true, underline: true, align: "center"}));
 			_titleLabel = ControlFactory.create(Label, "title") as Label;
-			_titleLabel.text = "Дешки";
+			_titleLabel.text = ResourceManager.getInstance().getString("MyResources", "deshki");
 			_titleLabel.setSize(200, 100);
 			addChild(_titleLabel);
 			_playLocallyButton = ControlFactory.create(Button) as Button;
-			_playLocallyButton.label = "Играть локально";
+			_playLocallyButton.label = ResourceManager.getInstance().getString("MyResources", "play_locally");
 			_playLocallyButton.setSize(200, 30);
 			_playLocallyButton.addEventListener(Button.E_CLICK, playLocallyButtonClickedHandler);
 			addChild(_playLocallyButton);
 			
 			_playNetworkButton = ControlFactory.create(Button) as Button;
-			_playNetworkButton.label = "Играть через Интернет";
+			_playNetworkButton.label = ResourceManager.getInstance().getString("MyResources", "play_via_internet");
 			_playNetworkButton.setSize(200, 30);
 			_playNetworkButton.addEventListener(Button.E_CLICK, playNetworkButtonClickedHandler);
 			addChild(_playNetworkButton);

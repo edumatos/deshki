@@ -21,6 +21,8 @@ package components
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
+	import mx.resources.ResourceManager;
+	
 	import org.osflash.signals.Signal;
 	
 	import razor.controls.Button;
@@ -47,7 +49,7 @@ package components
 			addChild(_gameField);
 			
 			_exitButton = ControlFactory.create(Button) as Button;
-			_exitButton.label = "Выйти из комнаты";
+			_exitButton.label = ResourceManager.getInstance().getString("MyResources", "leave_room");
 			_exitButton.setSize(200, 30);
 			_exitButton.addEventListener(Button.E_CLICK, exitButtonClickedHandler);
 			addChild(_exitButton);

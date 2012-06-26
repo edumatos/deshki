@@ -20,6 +20,8 @@ package components
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
+	import mx.resources.ResourceManager;
+	
 	import org.osflash.signals.Signal;
 	
 	import playerio.RoomInfo;
@@ -53,7 +55,7 @@ package components
 		public function LobbyScreen()
 		{
 			_yourNameLabel = ControlFactory.create(Label) as Label;
-			_yourNameLabel.text = "Ваше имя";
+			_yourNameLabel.text = ResourceManager.getInstance().getString("MyResources", "your_name");
 			_yourNameLabel.setSize(100, 30);
 			addChild(_yourNameLabel);
 			
@@ -62,13 +64,13 @@ package components
 			addChild(_yourNameTextInput);
 			
 			_connectButton = ControlFactory.create(Button) as Button;
-			_connectButton.label = "Подключиться";
+			_connectButton.label = ResourceManager.getInstance().getString("MyResources", "connect");
 			_connectButton.setSize(100, 30);
 			_connectButton.addEventListener(Button.E_CLICK, connectButtonClickedHandler);
 			addChild(_connectButton);
 			
 			_roomsLabel = ControlFactory.create(Label) as Label;
-			_roomsLabel.text = "Игровые комнаты";
+			_roomsLabel.text = ResourceManager.getInstance().getString("MyResources", "rooms");
 			_roomsLabel.setSize(150, 30);
 			addChild(_roomsLabel);
 			
@@ -78,7 +80,7 @@ package components
 			addChild(_roomsList);
 			
 			_roomNameLabel = ControlFactory.create(Label) as Label;
-			_roomNameLabel.text = "Имя комнаты";
+			_roomNameLabel.text = ResourceManager.getInstance().getString("MyResources", "room_name");
 			_roomNameLabel.setSize(100, 30);
 			addChild(_roomNameLabel);
 			
@@ -87,25 +89,25 @@ package components
 			addChild(_roomNameTextInput);
 			
 			_createRoomButton = ControlFactory.create(Button) as Button;
-			_createRoomButton.label = "Создать";
+			_createRoomButton.label = ResourceManager.getInstance().getString("MyResources", "create_room");
 			_createRoomButton.setSize(100, 30);
 			_createRoomButton.addEventListener(Button.E_CLICK, createRoomButtonClickedHandler);
 			addChild(_createRoomButton);
 			
 			_joinRoomButton = ControlFactory.create(Button) as Button;
-			_joinRoomButton.label = "Войти";
+			_joinRoomButton.label = ResourceManager.getInstance().getString("MyResources", "join_room");
 			_joinRoomButton.setSize(100, 30);
 			_joinRoomButton.addEventListener(Button.E_CLICK, joinRoomButtonClickedHandler);
 			addChild(_joinRoomButton);
 			
 			_refreshButton = ControlFactory.create(Button) as Button;
-			_refreshButton.label = "Обновить";
+			_refreshButton.label = ResourceManager.getInstance().getString("MyResources", "refresh");
 			_refreshButton.setSize(100,30);
 			_refreshButton.addEventListener(Button.E_CLICK, refreshButtonClickedHandler);
 			addChild(_refreshButton);
 			
 			_hideHistoryCheckBox = ControlFactory.create(CheckBox) as CheckBox;
-			_hideHistoryCheckBox.label = "Скрывать историю ходов";
+			_hideHistoryCheckBox.label = ResourceManager.getInstance().getString("MyResources", "hide_history");
 			_hideHistoryCheckBox.setSize(200, 30);
 			addChild(_hideHistoryCheckBox);
 			
