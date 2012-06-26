@@ -24,6 +24,8 @@ package mediators
 	import entities.Game;
 	import entities.Move;
 	
+	import mx.resources.ResourceManager;
+	
 	import org.robotlegs.base.ContextEvent;
 	import org.robotlegs.mvcs.Mediator;
 	
@@ -88,7 +90,7 @@ package mediators
 			localGameScreen.gameField.clearSelections();
 			if(gameProxy.state == Game.IN_PROGRESS)
 			{
-				localGameScreen.stateLabelText = ((gameProxy.lastMoveNumber+1)%2==0 ? "Ход чётных" : "Ход нечётных");
+				localGameScreen.stateLabelText = ((gameProxy.lastMoveNumber+1)%2==0 ? ResourceManager.getInstance().getString("MyResources", "even_turn") : ResourceManager.getInstance().getString("MyResources", "odd_turn"));
 				if(gameProxy.current == GameProxy.HUMAN)
 				{
 					var moves:Vector.<Move> = gameProxy.getPossibleMoves();
@@ -105,21 +107,21 @@ package mediators
 				if(gameProxy.hideHistory)
 					localGameScreen.gameField.showNumbers();
 				
-				localGameScreen.stateLabelText = "Победа чётных!";
+				localGameScreen.stateLabelText = ResourceManager.getInstance().getString("MyResources", "even_won");
 			}
 			else if(gameProxy.state == Game.ODD_WON)
 			{
 				if(gameProxy.hideHistory)
 					localGameScreen.gameField.showNumbers();
 				
-				localGameScreen.stateLabelText = "Победа нечётных!";
+				localGameScreen.stateLabelText = ResourceManager.getInstance().getString("MyResources", "odd_turn");
 			}
 			else if(gameProxy.state == Game.DRAW)
 			{
 				if(gameProxy.hideHistory)
 					localGameScreen.gameField.showNumbers();
 				
-				localGameScreen.stateLabelText = "Ничья!";
+				localGameScreen.stateLabelText = ResourceManager.getInstance().getString("MyResources", "draw");
 			}
 		}
 		

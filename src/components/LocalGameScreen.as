@@ -21,6 +21,8 @@ package components
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
+	import mx.resources.ResourceManager;
+	
 	import org.osflash.signals.Signal;
 	
 	import razor.controls.Button;
@@ -43,7 +45,7 @@ package components
 			addChild(_gameField);
 			
 			_restartButton = ControlFactory.create(Button) as Button;
-			_restartButton.label = "Новая игра";
+			_restartButton.label = ResourceManager.getInstance().getString("MyResources", "new_game");
 			_restartButton.setSize(200, 30);
 			_restartButton.addEventListener(Button.E_CLICK, restartButtonClickedHandler);
 			addChild(_restartButton);

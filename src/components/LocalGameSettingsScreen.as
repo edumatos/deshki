@@ -20,6 +20,8 @@ package components
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
+	import mx.resources.ResourceManager;
+	
 	import org.osflash.signals.Signal;
 	
 	import razor.controls.Button;
@@ -45,53 +47,53 @@ package components
 		public function LocalGameSettingsScreen()
 		{
 			_evenLabel = ControlFactory.create(Label) as Label;
-			_evenLabel.text = "Чётные";
+			_evenLabel.text = ResourceManager.getInstance().getString("MyResources", "even");
 			_evenLabel.setSize(150, 30);
 			addChild(_evenLabel);
 			
 			var group:RadioGroup = new RadioGroup();
 						
 			_evenHumanRadioButton = ControlFactory.create(RadioButton) as RadioButton;
-			_evenHumanRadioButton.label = "Человек";
+			_evenHumanRadioButton.label = ResourceManager.getInstance().getString("MyResources", "human");
 			_evenHumanRadioButton.group = group;
 			_evenHumanRadioButton.selected = true;
 			_evenHumanRadioButton.setSize(150, 30);
 			addChild(_evenHumanRadioButton);
 			
 			_evenComputerRadioButton = ControlFactory.create(RadioButton) as RadioButton;
-			_evenComputerRadioButton.label = "Компьютер";
+			_evenComputerRadioButton.label = ResourceManager.getInstance().getString("MyResources", "computer");
 			_evenComputerRadioButton.group = group;
 			_evenComputerRadioButton.setSize(150, 30);
 			addChild(_evenComputerRadioButton);
 			
 			_oddLabel = ControlFactory.create(Label) as Label;
-			_oddLabel.text = "Нечётные";
+			_oddLabel.text = ResourceManager.getInstance().getString("MyResources", "odd");
 			_oddLabel.setSize(150, 30);
 			addChild(_oddLabel);
 			
 			group = new RadioGroup();
 			
 			_oddHumanRadioButton = ControlFactory.create(RadioButton) as RadioButton;
-			_oddHumanRadioButton.label = "Человек";
+			_oddHumanRadioButton.label = ResourceManager.getInstance().getString("MyResources", "human");
 			_oddHumanRadioButton.group = group;
 			_oddHumanRadioButton.selected = true;
 			_oddHumanRadioButton.setSize(150, 30);
 			addChild(_oddHumanRadioButton);
 			
 			_oddComputerRadioButton = ControlFactory.create(RadioButton) as RadioButton;
-			_oddComputerRadioButton.label = "Компьютер";
+			_oddComputerRadioButton.label = ResourceManager.getInstance().getString("MyResources", "computer");
 			_oddComputerRadioButton.group = group;
 			_oddComputerRadioButton.setSize(150, 30);
 			addChild(_oddComputerRadioButton);
 			
 			_startButton = ControlFactory.create(Button) as Button;
-			_startButton.label = "Начать";
+			_startButton.label = ResourceManager.getInstance().getString("MyResources", "start");
 			_startButton.setSize(200, 30);
 			_startButton.addEventListener(Button.E_CLICK, startButtonClickedHandler);
 			addChild(_startButton);
 			
 			_hideHistoryCheckBox = ControlFactory.create(CheckBox) as CheckBox;
-			_hideHistoryCheckBox.label = "Скрывать историю ходов";
+			_hideHistoryCheckBox.label = ResourceManager.getInstance().getString("MyResources", "hide_history");
 			_hideHistoryCheckBox.setSize(200, 30);
 			addChild(_hideHistoryCheckBox);
 			
