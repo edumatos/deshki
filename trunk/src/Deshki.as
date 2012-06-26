@@ -51,6 +51,9 @@ package
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
+			// Вызываем здесь эту строку, чтобы в менеджере ресурсов установился флаг initializedForNonFrameworkApp
+			ResourceManager.getInstance().getString("MyResources", "deshki");
+			
 			if (Capabilities.language=="ru")
 				ResourceManager.getInstance().localeChain = ['ru_RU'];   
 			else
