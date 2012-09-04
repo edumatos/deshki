@@ -40,6 +40,7 @@ package mediators
 			lobbyScreen.createRoomButtonClicked.add(createRoomButtonClickedHandler);
 			lobbyScreen.joinRoomButtonClicked.add(joinRoomButtonClickedHandler);
 			lobbyScreen.refreshButtonClicked.add(refreshButtonClickedHandler);
+			lobbyScreen.backToWelcomeButtonClicked.add(backToWelcomeScreenButtonClickedHandler);
 			
 			eventMap.mapListener(eventDispatcher, ApplicationContext.ROOM_LIST_ARRIVED, roomListArrivedHandler, ContextEvent);
 			eventMap.mapListener(eventDispatcher, ApplicationContext.CONNECTED, connectedHandler, ContextEvent);
@@ -51,6 +52,7 @@ package mediators
 			lobbyScreen.createRoomButtonClicked.remove(createRoomButtonClickedHandler);
 			lobbyScreen.joinRoomButtonClicked.remove(joinRoomButtonClickedHandler);
 			lobbyScreen.refreshButtonClicked.remove(refreshButtonClickedHandler);
+			lobbyScreen.backToWelcomeButtonClicked.remove(backToWelcomeScreenButtonClickedHandler);
 		}
 		
 		private function connectedHandler(e:ContextEvent):void
@@ -82,6 +84,11 @@ package mediators
 		private function roomListArrivedHandler(e:ContextEvent):void
 		{
 			lobbyScreen.roomList = e.body as Array;
+		}
+		
+		private function backToWelcomeScreenButtonClickedHandler():void
+		{
+			dispatch(new ContextEvent(ApplicationContext.DISPLAY_WELCOME_SCREEN));
 		}
 	}
 }

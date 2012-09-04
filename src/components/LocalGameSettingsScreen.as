@@ -41,8 +41,10 @@ package components
 		private var _oddComputerRadioButton:RadioButton;
 		private var _startButton:Button;
 		private var _hideHistoryCheckBox:CheckBox;
+		private var _backToWelcomeScreenButton:Button;
 		
 		public var startButtonClicked:Signal;
+		public var backToWelcomeButtonClicked:Signal;
 		
 		public function LocalGameSettingsScreen()
 		{
@@ -92,12 +94,19 @@ package components
 			_startButton.addEventListener(Button.E_CLICK, startButtonClickedHandler);
 			addChild(_startButton);
 			
+			_backToWelcomeScreenButton = ControlFactory.create(Button) as Button;
+			_backToWelcomeScreenButton.label = ResourceManager.getInstance().getString("MyResources", "back");
+			_backToWelcomeScreenButton.setSize(200, 30);
+			_backToWelcomeScreenButton.addEventListener(Button.E_CLICK, backToWelcomeScreenButtonClickedHandler);
+			addChild(_backToWelcomeScreenButton);
+			
 			_hideHistoryCheckBox = ControlFactory.create(CheckBox) as CheckBox;
 			_hideHistoryCheckBox.label = ResourceManager.getInstance().getString("MyResources", "hide_history");
 			_hideHistoryCheckBox.setSize(200, 30);
 			addChild(_hideHistoryCheckBox);
 			
 			startButtonClicked = new Signal(Boolean, Boolean, Boolean);
+			backToWelcomeButtonClicked = new Signal();
 			
 			addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 		}
@@ -123,12 +132,20 @@ package components
 			_startButton.x = (stage.stageWidth-_startButton.width)*0.5;
 			_startButton.y = stage.stageHeight*0.5+100;
 			
+			_backToWelcomeScreenButton.x = (stage.stageWidth-_backToWelcomeScreenButton.width)*0.5;
+			_backToWelcomeScreenButton.y = stage.stageHeight*0.5+132;
+			
 			_hideHistoryCheckBox.move((stage.stageWidth-_hideHistoryCheckBox.width)*0.5, 70);
 		}
 		
 		private function startButtonClickedHandler(e:Event):void
 		{
 			startButtonClicked.dispatch(_evenHumanRadioButton.selected, _oddHumanRadioButton.selected, _hideHistoryCheckBox.selected);
+		}
+		
+		private function backToWelcomeScreenButtonClickedHandler(e:Event):void
+		{
+			backToWelcomeButtonClicked.dispatch();
 		}
 	}
 }

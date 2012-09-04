@@ -46,11 +46,13 @@ package components
 		private var _joinRoomButton:Button;
 		private var _refreshButton:Button;
 		private var _hideHistoryCheckBox:CheckBox;
+		private var _backToWelcomeScreenButton:Button;
 		
 		public var connectButtonClicked:Signal;
 		public var createRoomButtonClicked:Signal;
 		public var joinRoomButtonClicked:Signal;
 		public var refreshButtonClicked:Signal;
+		public var backToWelcomeButtonClicked:Signal;
 		
 		public function LobbyScreen()
 		{
@@ -111,10 +113,17 @@ package components
 			_hideHistoryCheckBox.setSize(200, 30);
 			addChild(_hideHistoryCheckBox);
 			
+			_backToWelcomeScreenButton = ControlFactory.create(Button) as Button;
+			_backToWelcomeScreenButton.label = ResourceManager.getInstance().getString("MyResources", "back");
+			_backToWelcomeScreenButton.setSize(100, 30);
+			_backToWelcomeScreenButton.addEventListener(Button.E_CLICK, backToWelcomeScreenButtonClickedHandler);
+			addChild(_backToWelcomeScreenButton);
+			
 			connectButtonClicked = new Signal(String);
 			createRoomButtonClicked = new Signal(String, Boolean);
 			joinRoomButtonClicked = new Signal(RoomInfo);
 			refreshButtonClicked = new Signal();
+			backToWelcomeButtonClicked = new Signal();
 			
 			addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 		}
@@ -147,6 +156,7 @@ package components
 			_joinRoomButton.move(300, 260);
 			_refreshButton.move(400,260);
 			_hideHistoryCheckBox.move(0,290);
+			_backToWelcomeScreenButton.move(stage.stageWidth-_backToWelcomeScreenButton.width, 0);
 		}
 		
 		private function connectButtonClickedHandler(e:Event):void
@@ -171,6 +181,11 @@ package components
 		private function refreshButtonClickedHandler(event:Event):void
 		{
 			refreshButtonClicked.dispatch();
+		}
+		
+		private function backToWelcomeScreenButtonClickedHandler(e:Event):void
+		{
+			backToWelcomeButtonClicked.dispatch();
 		}
 	}
 }
