@@ -55,6 +55,10 @@ package context
 	public class ApplicationContext extends Context
 	{
 		/**
+		 * Показать экран приветствия.
+		 */
+		public static const DISPLAY_WELCOME_SCREEN:String = "displayWelcomeScreen";
+		/**
 		 * Показать экран настроек локальной игры.
 		 */
 		public static const DISPLAY_LOCAL_GAME_SETTINGS_SCREEN:String = "displayLocalGameSettingsScreen";
@@ -126,6 +130,7 @@ package context
 		
 		override public function startup():void
 		{
+			commandMap.mapEvent(DISPLAY_WELCOME_SCREEN, ContextCommand, ContextEvent);
 			commandMap.mapEvent(DISPLAY_LOCAL_GAME_SETTINGS_SCREEN, ContextCommand, ContextEvent);
 			commandMap.mapEvent(DISPLAY_LOCAL_GAME_SCREEN, ContextCommand, ContextEvent);
 			commandMap.mapEvent(DO_MOVE, ContextCommand, ContextEvent);

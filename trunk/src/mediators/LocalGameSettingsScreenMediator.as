@@ -19,9 +19,10 @@ package mediators
 {
 	import components.LocalGameSettingsScreen;
 	
+	import context.ApplicationContext;
+	
 	import org.robotlegs.base.ContextEvent;
 	import org.robotlegs.mvcs.Mediator;
-	import context.ApplicationContext;
 	
 	public class LocalGameSettingsScreenMediator extends Mediator
 	{
@@ -31,16 +32,23 @@ package mediators
 		override public function onRegister():void
 		{
 			localGameSettingsScreen.startButtonClicked.add(startButtonClickedHandler);
+			localGameSettingsScreen.backToWelcomeButtonClicked.add(backToWelcomeScreenButtonClickedHandler);
 		}
 		
 		override public function onRemove():void
 		{
 			localGameSettingsScreen.startButtonClicked.remove(startButtonClickedHandler);
+			localGameSettingsScreen.backToWelcomeButtonClicked.remove(backToWelcomeScreenButtonClickedHandler);
 		}
 		
 		private function startButtonClickedHandler(isEvenHuman:Boolean, isOddHuman:Boolean, hideHistory:Boolean):void
 		{
 			dispatch(new ContextEvent(ApplicationContext.DISPLAY_LOCAL_GAME_SCREEN, {isEvenHuman:isEvenHuman, isOddHuman:isOddHuman, hideHistory:hideHistory}));
+		}
+		
+		private function backToWelcomeScreenButtonClickedHandler():void
+		{
+			dispatch(new ContextEvent(ApplicationContext.DISPLAY_WELCOME_SCREEN));
 		}
 	}
 }

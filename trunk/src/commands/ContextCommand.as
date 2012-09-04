@@ -22,6 +22,7 @@ package commands
 	import components.LocalGameScreen;
 	import components.LocalGameSettingsScreen;
 	import components.NetworkGameScreen;
+	import components.WelcomeScreen;
 	
 	import context.ApplicationContext;
 	
@@ -47,6 +48,10 @@ package commands
 		{
 			switch(event.type)
 			{
+				case ApplicationContext.DISPLAY_WELCOME_SCREEN:
+					handleDisplayWelcomeScreen();
+					break;
+				
 				case ApplicationContext.DISPLAY_LOCAL_GAME_SETTINGS_SCREEN:
 					handleDisplayLocalGameSettingsScreen();
 					break;
@@ -95,6 +100,12 @@ package commands
 					handleDisplayAlert();
 					break;
 			}
+		}
+		
+		private function handleDisplayWelcomeScreen():void
+		{
+			contextView.removeChildAt(0);
+			contextView.addChildAt(new WelcomeScreen(), 0);
 		}
 		
 		private function handleDisplayLocalGameSettingsScreen():void
