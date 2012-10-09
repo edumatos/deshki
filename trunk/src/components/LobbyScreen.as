@@ -35,6 +35,9 @@ package components
 	
 	public class LobbyScreen extends Sprite
 	{
+		[Embed(source="../../assets/refresh.png")]
+		private var RefreshIcon:Class;
+		
 		private var _yourNameLabel:Label;
 		private var _yourNameTextInput:TextInput;
 		private var _connectButton:Button;
@@ -105,6 +108,7 @@ package components
 			_refreshButton = ControlFactory.create(Button) as Button;
 			_refreshButton.label = ResourceManager.getInstance().getString("MyResources", "refresh");
 			_refreshButton.setSize(100,30);
+			_refreshButton.addIcon(RefreshIcon);
 			_refreshButton.addEventListener(Button.E_CLICK, refreshButtonClickedHandler);
 			addChild(_refreshButton);
 			

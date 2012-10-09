@@ -119,8 +119,8 @@ package components
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 			
-			_gameField.x = 2;
-			_gameField.y = 2;
+			_gameField.x = 20;
+			_gameField.y = 20;
 			
 			_exitButton.move(stage.stageWidth-_exitButton.width, stage.stageHeight-_exitButton.height);
 			
