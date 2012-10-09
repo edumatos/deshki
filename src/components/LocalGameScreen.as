@@ -73,8 +73,8 @@ package components
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 			
-			_gameField.x = 2;
-			_gameField.y = 2;
+			_gameField.x = 20;
+			_gameField.y = 20;
 			
 			_restartButton.move(stage.stageWidth-_restartButton.width, stage.stageHeight-_restartButton.height);
 			
