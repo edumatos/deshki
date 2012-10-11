@@ -84,7 +84,13 @@ package mediators
 			else
 			{
 				if(gameProxy.hideHistory)
+				{
 					localGameScreen.gameField.hideNumbers();
+				}
+				else
+				{
+					localGameScreen.appendToHistory(gameProxy.formatLastMove());
+				}
 				localGameScreen.gameField.setCell(lastMove.x, lastMove.y, String(gameProxy.lastMoveNumber));
 			}
 			localGameScreen.gameField.clearSelections();

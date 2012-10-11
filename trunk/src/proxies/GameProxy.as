@@ -175,5 +175,12 @@ package proxies
 				dispatch(new GameProxyEvent(GameProxyEvent.UPDATED));
 			}
 		}
+		
+		public function formatLastMove():String
+		{
+			var move:Move = _game.lastMove;
+			var number:int = (move.y*4+move.x);
+			return _game.lastMoveNumber+". "+number.toString(10)+" ("+("0000"+number.toString(2)).substr(-4)+")";
+		}
 	}
 }
