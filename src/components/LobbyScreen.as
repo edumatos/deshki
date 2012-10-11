@@ -32,6 +32,7 @@ package components
 	import razor.controls.List;
 	import razor.controls.TextInput;
 	import razor.core.ControlFactory;
+	import razor.core.tooltips.TooltipData;
 	
 	public class LobbyScreen extends Sprite
 	{
@@ -77,32 +78,40 @@ package components
 			_roomsLabel = ControlFactory.create(Label) as Label;
 			_roomsLabel.text = ResourceManager.getInstance().getString("MyResources", "rooms");
 			_roomsLabel.setSize(150, 30);
+			_roomsLabel.visible = false;
 			addChild(_roomsLabel);
 			
 			_roomsList = ControlFactory.create(List) as List;
 			_roomsList.setSize(600, 200);
 			_roomsList.cellClass = RoomInfoCell;
+			_roomsList.visible = false;
 			addChild(_roomsList);
 			
 			_roomNameLabel = ControlFactory.create(Label) as Label;
 			_roomNameLabel.text = ResourceManager.getInstance().getString("MyResources", "room_name");
 			_roomNameLabel.setSize(100, 30);
+			_roomNameLabel.visible = false;
 			addChild(_roomNameLabel);
 			
 			_roomNameTextInput = ControlFactory.create(TextInput) as TextInput;
 			_roomNameTextInput.setSize(100, 30);
+			_roomNameTextInput.visible = false;
 			addChild(_roomNameTextInput);
 			
 			_createRoomButton = ControlFactory.create(Button) as Button;
 			_createRoomButton.label = ResourceManager.getInstance().getString("MyResources", "create_room");
 			_createRoomButton.setSize(100, 30);
 			_createRoomButton.addEventListener(Button.E_CLICK, createRoomButtonClickedHandler);
+			_createRoomButton.tooltip = new TooltipData(ResourceManager.getInstance().getString("MyResources", "create_room_tooltip"));
+			_createRoomButton.visible = false;
 			addChild(_createRoomButton);
 			
 			_joinRoomButton = ControlFactory.create(Button) as Button;
 			_joinRoomButton.label = ResourceManager.getInstance().getString("MyResources", "join_room");
 			_joinRoomButton.setSize(100, 30);
 			_joinRoomButton.addEventListener(Button.E_CLICK, joinRoomButtonClickedHandler);
+			_joinRoomButton.tooltip = new TooltipData(ResourceManager.getInstance().getString("MyResources", "join_room_tooltip"));
+			_joinRoomButton.visible = false;
 			addChild(_joinRoomButton);
 			
 			_refreshButton = ControlFactory.create(Button) as Button;
@@ -110,11 +119,14 @@ package components
 			_refreshButton.setSize(100,30);
 			_refreshButton.addIcon(RefreshIcon);
 			_refreshButton.addEventListener(Button.E_CLICK, refreshButtonClickedHandler);
+			_refreshButton.tooltip = new TooltipData(ResourceManager.getInstance().getString("MyResources", "refresh_tooltip"));
+			_refreshButton.visible = false;
 			addChild(_refreshButton);
 			
 			_hideHistoryCheckBox = ControlFactory.create(CheckBox) as CheckBox;
 			_hideHistoryCheckBox.label = ResourceManager.getInstance().getString("MyResources", "hide_history");
 			_hideHistoryCheckBox.setSize(200, 30);
+			_hideHistoryCheckBox.visible = false;
 			addChild(_hideHistoryCheckBox);
 			
 			_backToWelcomeScreenButton = ControlFactory.create(Button) as Button;
@@ -138,6 +150,15 @@ package components
 			_yourNameTextInput.editable = false;
 			_connectButton.visible = false;
 			_connectButton.enabled = false;
+			
+			_roomsLabel.visible = true;
+			_roomsList.visible = true;
+			_roomNameLabel.visible = true;
+			_roomNameTextInput.visible = true;
+			_createRoomButton.visible = true;
+			_joinRoomButton.visible = true;
+			_refreshButton.visible = true;
+			_hideHistoryCheckBox.visible = true;
 		}
 		
 		public function set roomList(value:Array):void

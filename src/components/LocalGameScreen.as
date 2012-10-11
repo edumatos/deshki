@@ -27,6 +27,7 @@ package components
 	
 	import razor.controls.Button;
 	import razor.controls.Label;
+	import razor.controls.TextArea;
 	import razor.core.ControlFactory;
 	
 	public class LocalGameScreen extends Sprite
@@ -34,6 +35,7 @@ package components
 		private var _gameField:GameField;
 		private var _restartButton:Button;
 		private var _stateLabel:Label;
+		private var _historyTextArea:TextArea;
 		
 		public var restartButtonClicked:Signal;
 		
@@ -54,6 +56,10 @@ package components
 			_stateLabel.setSize(200, 300);
 			addChild(_stateLabel);
 			
+			_historyTextArea = ControlFactory.create(TextArea) as TextArea;
+			_historyTextArea.setSize(200,100);
+			addChild(_historyTextArea);
+			
 			restartButtonClicked = new Signal();
 			
 			addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
@@ -69,6 +75,12 @@ package components
 			_stateLabel.text = value;
 		}
 		
+		public function appendToHistory(line:String):void
+		{
+			_historyTextArea.text += (_historyTextArea.text.length>0 ? "\n" : "")+line;
+			_historyTextArea.textField.scrollV = _historyTextArea.textField.maxScrollV;
+		}
+		
 		private function addedToStageHandler(e:Event):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
@@ -79,6 +91,8 @@ package components
 			_restartButton.move(stage.stageWidth-_restartButton.width, stage.stageHeight-_restartButton.height);
 			
 			_stateLabel.move(stage.stageWidth-_stateLabel.width, 0);
+			
+			_historyTextArea.move(stage.stageWidth-_historyTextArea.width, stage.stageHeight-_restartButton.height-_historyTextArea.height-2);
 		}
 		
 		private function restartButtonClickedHandler(e:Event):void
