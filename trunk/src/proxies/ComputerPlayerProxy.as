@@ -19,6 +19,7 @@ package proxies
 {
 	import ai.AbstractStrategy;
 	import ai.ComputerPlayer;
+	import ai.DatabaseStrategy;
 	import ai.GreedyStrategy;
 	import ai.RandomStrategy;
 	import ai.ShallowStrategy;
@@ -47,7 +48,8 @@ package proxies
 		
 		public function pickRandomStrategy():void
 		{
-			switch(int(Math.random()*4.0))
+			_computerPlayer.strategy = new DatabaseStrategy();
+			/*switch(int(Math.random()*4.0))
 			{
 				case 0:
 					_computerPlayer.strategy = new SimpleStrategy();
@@ -61,7 +63,7 @@ package proxies
 				case 3:
 					_computerPlayer.strategy = new ShallowStrategy();
 					break;
-			}
+			}*/
 		}
 		
 		public function doMove(game:Game):void
