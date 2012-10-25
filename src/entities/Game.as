@@ -17,6 +17,8 @@
 */
 package entities
 {
+	import flash.utils.ByteArray;
+
 	/**
 	 * Класс для хранения состояния игры.
 	 */
@@ -202,6 +204,20 @@ package entities
 			{
 				_state = (_history.length-1)%2==0 ? EVEN_WON : ODD_WON;
 			}
+		}
+		
+		public function toByteArray():ByteArray
+		{
+			var bytes:ByteArray = new ByteArray();
+			bytes.length = 3;
+			
+			bytes[2] = _history.length>0 ? _history[_history.length-1] : -1;
+			for(var i:int=0; i<16; ++i)
+			{
+				bytes[1-(i >>> 3)] |= (_field[i] ? 1 : 0) << (i%8);
+			}
+			
+			return bytes;
 		}
 	}
 }
