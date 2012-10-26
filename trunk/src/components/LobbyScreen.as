@@ -61,7 +61,7 @@ package components
 		public function LobbyScreen()
 		{
 			_yourNameLabel = ControlFactory.create(Label) as Label;
-			_yourNameLabel.text = ResourceManager.getInstance().getString("MyResources", "your_name");
+			_yourNameLabel.text = ResourceManager.getInstance().getString("Strings", "your_name");
 			_yourNameLabel.setSize(100, 30);
 			addChild(_yourNameLabel);
 			
@@ -70,13 +70,13 @@ package components
 			addChild(_yourNameTextInput);
 			
 			_connectButton = ControlFactory.create(Button) as Button;
-			_connectButton.label = ResourceManager.getInstance().getString("MyResources", "connect");
+			_connectButton.label = ResourceManager.getInstance().getString("Strings", "connect");
 			_connectButton.setSize(100, 30);
 			_connectButton.addEventListener(Button.E_CLICK, connectButtonClickedHandler);
 			addChild(_connectButton);
 			
 			_roomsLabel = ControlFactory.create(Label) as Label;
-			_roomsLabel.text = ResourceManager.getInstance().getString("MyResources", "rooms");
+			_roomsLabel.text = ResourceManager.getInstance().getString("Strings", "rooms");
 			_roomsLabel.setSize(150, 30);
 			_roomsLabel.visible = false;
 			addChild(_roomsLabel);
@@ -88,7 +88,7 @@ package components
 			addChild(_roomsList);
 			
 			_roomNameLabel = ControlFactory.create(Label) as Label;
-			_roomNameLabel.text = ResourceManager.getInstance().getString("MyResources", "room_name");
+			_roomNameLabel.text = ResourceManager.getInstance().getString("Strings", "room_name");
 			_roomNameLabel.setSize(100, 30);
 			_roomNameLabel.visible = false;
 			addChild(_roomNameLabel);
@@ -99,38 +99,38 @@ package components
 			addChild(_roomNameTextInput);
 			
 			_createRoomButton = ControlFactory.create(Button) as Button;
-			_createRoomButton.label = ResourceManager.getInstance().getString("MyResources", "create_room");
+			_createRoomButton.label = ResourceManager.getInstance().getString("Strings", "create_room");
 			_createRoomButton.setSize(100, 30);
 			_createRoomButton.addEventListener(Button.E_CLICK, createRoomButtonClickedHandler);
-			_createRoomButton.tooltip = new TooltipData(ResourceManager.getInstance().getString("MyResources", "create_room_tooltip"));
+			_createRoomButton.tooltip = new TooltipData(ResourceManager.getInstance().getString("Strings", "create_room_tooltip"));
 			_createRoomButton.visible = false;
 			addChild(_createRoomButton);
 			
 			_joinRoomButton = ControlFactory.create(Button) as Button;
-			_joinRoomButton.label = ResourceManager.getInstance().getString("MyResources", "join_room");
+			_joinRoomButton.label = ResourceManager.getInstance().getString("Strings", "join_room");
 			_joinRoomButton.setSize(100, 30);
 			_joinRoomButton.addEventListener(Button.E_CLICK, joinRoomButtonClickedHandler);
-			_joinRoomButton.tooltip = new TooltipData(ResourceManager.getInstance().getString("MyResources", "join_room_tooltip"));
+			_joinRoomButton.tooltip = new TooltipData(ResourceManager.getInstance().getString("Strings", "join_room_tooltip"));
 			_joinRoomButton.visible = false;
 			addChild(_joinRoomButton);
 			
 			_refreshButton = ControlFactory.create(Button) as Button;
-			_refreshButton.label = ResourceManager.getInstance().getString("MyResources", "refresh");
+			_refreshButton.label = ResourceManager.getInstance().getString("Strings", "refresh");
 			_refreshButton.setSize(100,30);
 			_refreshButton.addIcon(RefreshIcon);
 			_refreshButton.addEventListener(Button.E_CLICK, refreshButtonClickedHandler);
-			_refreshButton.tooltip = new TooltipData(ResourceManager.getInstance().getString("MyResources", "refresh_tooltip"));
+			_refreshButton.tooltip = new TooltipData(ResourceManager.getInstance().getString("Strings", "refresh_tooltip"));
 			_refreshButton.visible = false;
 			addChild(_refreshButton);
 			
 			_hideHistoryCheckBox = ControlFactory.create(CheckBox) as CheckBox;
-			_hideHistoryCheckBox.label = ResourceManager.getInstance().getString("MyResources", "hide_history");
+			_hideHistoryCheckBox.label = ResourceManager.getInstance().getString("Strings", "hide_history");
 			_hideHistoryCheckBox.setSize(200, 30);
 			_hideHistoryCheckBox.visible = false;
 			addChild(_hideHistoryCheckBox);
 			
 			_backToWelcomeScreenButton = ControlFactory.create(Button) as Button;
-			_backToWelcomeScreenButton.label = ResourceManager.getInstance().getString("MyResources", "back");
+			_backToWelcomeScreenButton.label = ResourceManager.getInstance().getString("Strings", "back");
 			_backToWelcomeScreenButton.setSize(100, 30);
 			_backToWelcomeScreenButton.addEventListener(Button.E_CLICK, backToWelcomeScreenButtonClickedHandler);
 			addChild(_backToWelcomeScreenButton);

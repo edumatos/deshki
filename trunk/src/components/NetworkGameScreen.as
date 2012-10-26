@@ -49,7 +49,7 @@ package components
 			addChild(_gameField);
 			
 			_exitButton = ControlFactory.create(Button) as Button;
-			_exitButton.label = ResourceManager.getInstance().getString("MyResources", "leave_room");
+			_exitButton.label = ResourceManager.getInstance().getString("Strings", "leave_room");
 			_exitButton.setSize(200, 30);
 			_exitButton.addEventListener(Button.E_CLICK, exitButtonClickedHandler);
 			addChild(_exitButton);
@@ -59,8 +59,8 @@ package components
 			addChild(_stateLabel);
 			
 			_status = new Status;
-			_status["evenTF"].text = ResourceManager.getInstance().getString("MyResources", "even");;
-			_status["oddTF"].text = ResourceManager.getInstance().getString("MyResources", "odd");;
+			_status["evenTF"].text = ResourceManager.getInstance().getString("Strings", "even");;
+			_status["oddTF"].text = ResourceManager.getInstance().getString("Strings", "odd");;
 			_status["evenName"].text = "";
 			_status["oddName"].text = "";
 			addChild(_status);
