@@ -1,6 +1,6 @@
 /*
-* Èãðà Äåøêè
-* Copyright (C) 2012  Ïàâåë Êàáàêèí
+* Ð˜Ð³Ñ€Ð° Ð”ÐµÑˆÐºÐ¸
+* Copyright (C) 2012  ÐŸÐ°Ð²ÐµÐ» ÐšÐ°Ð±Ð°ÐºÐ¸Ð½
 * 
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,32 +19,40 @@ package deshki;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DeshkiTreeUtility {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		
-		int level = 0;
-		
+		for(int level=16; level>=0; --level)
+			calcUtilityForLevel(level);
+	}
+	
+	private static void calcUtilityForLevel(int level)
+	{
 		Connection connection = null;
+		PreparedStatement selectChildren = null;
+		PreparedStatement updateUtility = null;
+		
 		try {
 			
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection("jdbc:mysql://localhost/deshki?user=root&password=rootpass");
 			
-			Statement st = connection.createStatement();
-			ResultSet rs = st.executeQuery("SELECT id,state FROM element WHERE level="+level);
-			while(rs.next())
+			selectChildren = connection.prepareStatement("SELECT element.utility FROM element INNER JOIN parent_child ON parent_child.child=element.id WHERE parent_child.parent=?");
+			updateUtility = connection.prepareStatement("UPDATE element SET utility=? WHERE id=?");
+			
+			Statement selectLevel = connection.createStatement();
+			ResultSet elements = selectLevel.executeQuery("SELECT id, state FROM element WHERE level="+level);
+			while(elements.next())
 			{
-				int id = rs.getInt(1);
+				int id = elements.getInt(1);
 				Game game = new Game(null,null);
-				game.fromBytes(rs.getBytes(2));
+				game.fromBytes(elements.getBytes(2));
 				
 				int utility = 0;
 				if(game.getState()==GameState.EVEN_WON)
@@ -56,36 +64,47 @@ public class DeshkiTreeUtility {
 				else
 				{
 					utility = level%2==0 ? -16 : 16;
-					Statement children = connection.createStatement();
-					ResultSet crs = children.executeQuery("SELECT element.utility FROM element INNER JOIN parent_child ON parent_child.child=element.id WHERE parent_child.parent = "+id);
-					while(crs.next())
+					selectChildren.setInt(1, id);
+					ResultSet children = selectChildren.executeQuery();
+					while(children.next())
 					{
-						int tmp = crs.getInt(1);
+						int childUtility = children.getInt(1);
 						if(level%2==0)
 						{
-							if(tmp > utility)
-								utility = tmp;
+							if(childUtility > utility)
+								utility = childUtility;
 						}
 						else
 						{
-							if(tmp < utility)
-								utility = tmp;
+							if(childUtility < utility)
+								utility = childUtility;
 						}
 					}
-					crs.close();
 					children.close();
 				}
-				
-				Statement ust = connection.createStatement();
-				ust.executeUpdate("UPDATE element SET utility="+utility+" WHERE id="+id);
-				ust.close();
+				updateUtility.setInt(1, utility);
+				updateUtility.setInt(2, id);
+				updateUtility.executeUpdate();
 			}
-			rs.close();
-			st.close();
+			elements.close();
+			selectLevel.close();
+			
+			System.out.println(level+" - Done");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			
+			try {
+				if(selectChildren!=null)
+					selectChildren.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if(updateUtility!=null)
+					updateUtility.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 			try {
 				if(connection!=null)
 					connection.close();
@@ -93,8 +112,6 @@ public class DeshkiTreeUtility {
 				e.printStackTrace();
 			}
 		}
-		
-		System.out.println(level+" - Done");
 	}
 
 }

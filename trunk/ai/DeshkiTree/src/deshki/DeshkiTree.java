@@ -1,6 +1,6 @@
 /*
-* »„‡ ƒÂ¯ÍË
-* Copyright (C) 2012  œ‡‚ÂÎ  ‡·‡ÍËÌ
+* –ò–≥—Ä–∞ –î–µ—à–∫–∏
+* Copyright (C) 2012  –ü–∞–≤–µ–ª –ö–∞–±–∞–∫–∏–Ω
 * 
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -26,65 +26,50 @@ import java.util.Vector;
 
 public class DeshkiTree {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args)
 	{
-		DeshkiTree dt = new DeshkiTree();
 		try {
+			DeshkiTree dt = new DeshkiTree();
 			dt.buildTree();
+			
+			System.out.println("Done.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	private Connection _connection;
-	
-	public DeshkiTree()
-	{
-		
-	}
+	private PreparedStatement _addElement;
 	
 	public void buildTree() throws ClassNotFoundException, SQLException
 	{
 		Class.forName("com.mysql.jdbc.Driver");
 		_connection = DriverManager.getConnection("jdbc:mysql://localhost/deshki?user=root&password=rootpass");
-		buildNext(-1, new Game(null, null));
-		_connection.close();
+		_addElement = _connection.prepareStatement("SELECT add_element(?,?,?)");
 		
-		System.out.println("Done.");
+		buildNext(-1, new Game(null, null));
+		
+		_addElement.close();
+		_connection.close();
 	}
 	
 	private void buildNext(int parent, Game game) throws SQLException
 	{
-		/*
-		BEGIN
-   		DECLARE lastInsertId integer;
-   		INSERT INTO element (state,level) VALUES (state_param,level_param) ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id);
-   		SET lastInsertId = LAST_INSERT_ID();
-   		INSERT IGNORE INTO parent_child (parent,child) VALUES (parent_param,lastInsertId);
-   		RETURN lastInsertId;
-   		END
-   		*/
-		PreparedStatement st = _connection.prepareStatement("SELECT add_element(?,?,?)");
-		st.setInt(1, parent);
-		st.setBytes(2, game.toBytes());
-		st.setInt(3, game.getLastMoveNumber()+1);
-		ResultSet rs = st.executeQuery();
+		_addElement.setInt(1, parent);
+		_addElement.setBytes(2, game.toBytes());
+		_addElement.setInt(3, game.getLastMoveNumber()+1);
+		
+		ResultSet rs = _addElement.executeQuery();
 		rs.first();
 		int id = rs.getInt(1);
 		rs.close();
-		st.close();
 		
-		if(game.getState()==GameState.EVEN_WON || game.getState()==GameState.ODD_WON || game.getState()==GameState.DRAW)
-		{
+		if(game.getState()!=GameState.IN_PROGRESS) {
 			return;
 		}
 		
 		Vector<Move> moves = game.getPossibleMoves();
-		for(int i=0; i<moves.size(); ++i)
-		{
+		for(int i=0; i<moves.size(); ++i) {
 			buildNext(id, new Game(game, moves.get(i)));
 		}
 	}
