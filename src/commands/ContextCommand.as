@@ -28,6 +28,8 @@ package commands
 	
 	import entities.Move;
 	
+	import mx.resources.ResourceManager;
+	
 	import org.robotlegs.base.ContextEvent;
 	import org.robotlegs.mvcs.Command;
 	
@@ -147,7 +149,7 @@ package commands
 		private function handleConnect():void
 		{
 			var playerIOService:PlayerIOService = injector.getInstance(PlayerIOService) as PlayerIOService;
-			playerIOService.connect(contextView.stage, "deshki-v1lncpcgrk2w6zgwsc0duw", "public", event.body as String, "");
+			playerIOService.connect(contextView.stage, ResourceManager.getInstance().getString("Config", "playerio_game_id"), "public", event.body as String, "");
 		}
 		
 		private function handleCreateRoom():void

@@ -49,59 +49,59 @@ package components
 		public function LocalGameSettingsScreen()
 		{
 			_evenLabel = ControlFactory.create(Label) as Label;
-			_evenLabel.text = ResourceManager.getInstance().getString("MyResources", "even");
+			_evenLabel.text = ResourceManager.getInstance().getString("Strings", "even");
 			_evenLabel.setSize(150, 30);
 			addChild(_evenLabel);
 			
 			var group:RadioGroup = new RadioGroup();
 						
 			_evenHumanRadioButton = ControlFactory.create(RadioButton) as RadioButton;
-			_evenHumanRadioButton.label = ResourceManager.getInstance().getString("MyResources", "human");
+			_evenHumanRadioButton.label = ResourceManager.getInstance().getString("Strings", "human");
 			_evenHumanRadioButton.group = group;
 			_evenHumanRadioButton.selected = true;
 			_evenHumanRadioButton.setSize(150, 30);
 			addChild(_evenHumanRadioButton);
 			
 			_evenComputerRadioButton = ControlFactory.create(RadioButton) as RadioButton;
-			_evenComputerRadioButton.label = ResourceManager.getInstance().getString("MyResources", "computer");
+			_evenComputerRadioButton.label = ResourceManager.getInstance().getString("Strings", "computer");
 			_evenComputerRadioButton.group = group;
 			_evenComputerRadioButton.setSize(150, 30);
 			addChild(_evenComputerRadioButton);
 			
 			_oddLabel = ControlFactory.create(Label) as Label;
-			_oddLabel.text = ResourceManager.getInstance().getString("MyResources", "odd");
+			_oddLabel.text = ResourceManager.getInstance().getString("Strings", "odd");
 			_oddLabel.setSize(150, 30);
 			addChild(_oddLabel);
 			
 			group = new RadioGroup();
 			
 			_oddHumanRadioButton = ControlFactory.create(RadioButton) as RadioButton;
-			_oddHumanRadioButton.label = ResourceManager.getInstance().getString("MyResources", "human");
+			_oddHumanRadioButton.label = ResourceManager.getInstance().getString("Strings", "human");
 			_oddHumanRadioButton.group = group;
 			_oddHumanRadioButton.selected = true;
 			_oddHumanRadioButton.setSize(150, 30);
 			addChild(_oddHumanRadioButton);
 			
 			_oddComputerRadioButton = ControlFactory.create(RadioButton) as RadioButton;
-			_oddComputerRadioButton.label = ResourceManager.getInstance().getString("MyResources", "computer");
+			_oddComputerRadioButton.label = ResourceManager.getInstance().getString("Strings", "computer");
 			_oddComputerRadioButton.group = group;
 			_oddComputerRadioButton.setSize(150, 30);
 			addChild(_oddComputerRadioButton);
 			
 			_startButton = ControlFactory.create(Button) as Button;
-			_startButton.label = ResourceManager.getInstance().getString("MyResources", "start");
+			_startButton.label = ResourceManager.getInstance().getString("Strings", "start");
 			_startButton.setSize(200, 30);
 			_startButton.addEventListener(Button.E_CLICK, startButtonClickedHandler);
 			addChild(_startButton);
 			
 			_backToWelcomeScreenButton = ControlFactory.create(Button) as Button;
-			_backToWelcomeScreenButton.label = ResourceManager.getInstance().getString("MyResources", "back");
+			_backToWelcomeScreenButton.label = ResourceManager.getInstance().getString("Strings", "back");
 			_backToWelcomeScreenButton.setSize(200, 30);
 			_backToWelcomeScreenButton.addEventListener(Button.E_CLICK, backToWelcomeScreenButtonClickedHandler);
 			addChild(_backToWelcomeScreenButton);
 			
 			_hideHistoryCheckBox = ControlFactory.create(CheckBox) as CheckBox;
-			_hideHistoryCheckBox.label = ResourceManager.getInstance().getString("MyResources", "hide_history");
+			_hideHistoryCheckBox.label = ResourceManager.getInstance().getString("Strings", "hide_history");
 			_hideHistoryCheckBox.setSize(200, 30);
 			addChild(_hideHistoryCheckBox);
 			

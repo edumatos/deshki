@@ -47,7 +47,7 @@ package components
 			addChild(_gameField);
 			
 			_restartButton = ControlFactory.create(Button) as Button;
-			_restartButton.label = ResourceManager.getInstance().getString("MyResources", "new_game");
+			_restartButton.label = ResourceManager.getInstance().getString("Strings", "new_game");
 			_restartButton.setSize(200, 30);
 			_restartButton.addEventListener(Button.E_CLICK, restartButtonClickedHandler);
 			addChild(_restartButton);

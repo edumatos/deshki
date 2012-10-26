@@ -19,7 +19,7 @@ package proxies
 {
 	import ai.AbstractStrategy;
 	import ai.ComputerPlayer;
-	import ai.DatabaseStrategy;
+	import ai.FullTreeMinimaxStrategy;
 	import ai.GreedyStrategy;
 	import ai.RandomStrategy;
 	import ai.ShallowStrategy;
@@ -48,7 +48,7 @@ package proxies
 		
 		public function pickRandomStrategy():void
 		{
-			_computerPlayer.strategy = new DatabaseStrategy();
+			_computerPlayer.strategy = new FullTreeMinimaxStrategy();
 			/*switch(int(Math.random()*4.0))
 			{
 				case 0:

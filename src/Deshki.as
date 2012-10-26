@@ -30,7 +30,8 @@ package
 	import razor.skins.plastic.PlasticStyleSheet;
 	
 	[SWF(width="600", height="400")]
-	[ResourceBundle("MyResources")]
+	[ResourceBundle("Strings")]
+	[ResourceBundle("Config")]
 	public class Deshki extends Sprite
 	{
 		private var _context:ApplicationContext;
@@ -52,7 +53,7 @@ package
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
 			// Вызываем здесь эту строку, чтобы в менеджере ресурсов установился флаг initializedForNonFrameworkApp
-			ResourceManager.getInstance().getString("MyResources", "deshki");
+			ResourceManager.getInstance().getString("Strings", "deshki");
 			
 			if (Capabilities.language=="ru")
 				ResourceManager.getInstance().localeChain = ['ru_RU'];   

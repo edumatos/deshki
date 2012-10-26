@@ -27,17 +27,19 @@ package ai
 	import flash.net.URLRequestMethod;
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
+	
+	import mx.resources.ResourceManager;
 
-	public class DatabaseStrategy extends AbstractStrategy
+	public class FullTreeMinimaxStrategy extends AbstractStrategy
 	{
 		private var _loader:URLLoader;
-		private var _url:String = "http://localhost/deshki/move.php";
+		private var _url:String = ResourceManager.getInstance().getString("Config", "minimax_move_url");
 		
 		/*private var _loader2:URLLoader;
 		private var _url2:String = "http://localhost/deshki/move2.php";
 		private var _game:Game;*/
 		
-		public function DatabaseStrategy()
+		public function FullTreeMinimaxStrategy()
 		{
 			_loader = new URLLoader();
 			_loader.addEventListener(Event.COMPLETE, loaderCompleteHandler);
