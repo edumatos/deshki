@@ -1,6 +1,6 @@
 /*
-* Игра Дешки
-* Copyright (C) 2012  Павел Кабакин
+* РРіСЂР° Р”РµС€РєРё
+* Copyright (C) 2012  РџР°РІРµР» РљР°Р±Р°РєРёРЅ
 * 
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
