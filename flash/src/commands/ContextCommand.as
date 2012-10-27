@@ -35,6 +35,7 @@ package commands
 	
 	import playerio.RoomInfo;
 	
+	import proxies.ComputerPlayerProxy;
 	import proxies.GameProxy;
 	
 	import razor.controls.Application;
@@ -120,6 +121,10 @@ package commands
 		{
 			contextView.removeChildAt(0);
 			contextView.addChildAt(new LocalGameScreen(), 0);
+			
+			var computerPlayerProxy:ComputerPlayerProxy = injector.getInstance(ComputerPlayerProxy) as ComputerPlayerProxy;
+			computerPlayerProxy.evenStrategy = event.body.evenStrategy as String;
+			computerPlayerProxy.oddStrategy = event.body.oddStrategy as String;
 			
 			var gameProxy:GameProxy = injector.getInstance(GameProxy) as GameProxy;
 			var even:int = (event.body.isEvenHuman as Boolean) ? GameProxy.HUMAN : GameProxy.COMPUTER;

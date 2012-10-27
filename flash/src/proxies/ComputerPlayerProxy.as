@@ -17,58 +17,65 @@
 */
 package proxies
 {
-	import ai.AbstractStrategy;
 	import ai.ComputerPlayer;
-	import ai.FullTreeMinimaxStrategy;
-	import ai.GreedyStrategy;
-	import ai.RandomStrategy;
-	import ai.ShallowStrategy;
-	import ai.SimpleStrategy;
 	
 	import entities.Game;
 	import entities.Move;
+	
+	import flash.utils.Dictionary;
 	
 	import org.robotlegs.mvcs.Actor;
 	
 	public class ComputerPlayerProxy extends Actor
 	{
-		private var _computerPlayer:ComputerPlayer;
+		private var _evenComputerPlayer:ComputerPlayer;
+		private var _oddComputerPlayer:ComputerPlayer;
+		private var _strategies:Dictionary;
 		
 		public function ComputerPlayerProxy()
 		{
-			_computerPlayer = new ComputerPlayer();
-			_computerPlayer.done.add(doneHandler);
-			_computerPlayer.strategy = new SimpleStrategy();
+			_evenComputerPlayer = new ComputerPlayer();
+			_evenComputerPlayer.done.add(doneHandler);
+			
+			_oddComputerPlayer = new ComputerPlayer();
+			_oddComputerPlayer.done.add(doneHandler);
+			
+			_strategies = new Dictionary();
 		}
 		
-		public function set strategy(value:AbstractStrategy):void
+		public function registerStrategy(strategyClass:Class, name:String):void
 		{
-			_computerPlayer.strategy = value;
+			_strategies[name] = strategyClass;
 		}
 		
-		public function pickRandomStrategy():void
+		public function get namesOfRegisteredStrategies():Array
 		{
-			_computerPlayer.strategy = new FullTreeMinimaxStrategy();
-			/*switch(int(Math.random()*4.0))
+			var names:Array = new Array();
+			for(var name:String in _strategies)
 			{
-				case 0:
-					_computerPlayer.strategy = new SimpleStrategy();
-					break;
-				case 1:
-					_computerPlayer.strategy = new RandomStrategy();
-					break;
-				case 2:
-					_computerPlayer.strategy = new GreedyStrategy();
-					break;
-				case 3:
-					_computerPlayer.strategy = new ShallowStrategy();
-					break;
-			}*/
+				names.push(name);
+			}
+			return names;
 		}
 		
-		public function doMove(game:Game):void
+		public function set evenStrategy(value:String):void
 		{
-			_computerPlayer.doMove(game);
+			_evenComputerPlayer.strategy = new (_strategies[value] as Class)();
+		}
+		
+		public function set oddStrategy(value:String):void
+		{
+			_oddComputerPlayer.strategy = new (_strategies[value] as Class)();
+		}
+		
+		public function evenDoMove(game:Game):void
+		{
+			_evenComputerPlayer.doMove(game);
+		}
+		
+		public function oddDoMove(game:Game):void
+		{
+			_oddComputerPlayer.doMove(game);
 		}
 		
 		private function doneHandler(move:Move):void

@@ -17,6 +17,12 @@
 */
 package context
 {
+	import ai.GreedyStrategy;
+	import ai.MinimaxStrategy;
+	import ai.RandomStrategy;
+	import ai.ShallowStrategy;
+	import ai.SimpleStrategy;
+	
 	import commands.ContextCommand;
 	import commands.PlayerIOServiceCommand;
 	
@@ -35,6 +41,8 @@ package context
 	import mediators.LocalGameSettingsScreenMediator;
 	import mediators.NetworkGameScreenMediator;
 	import mediators.WelcomeScreenMediator;
+	
+	import mx.resources.ResourceManager;
 	
 	import org.robotlegs.base.ContextEvent;
 	import org.robotlegs.mvcs.Context;
@@ -155,6 +163,13 @@ package context
 			injector.mapSingleton(GameProxy);
 			injector.mapSingleton(RoomProxy);
 			injector.mapSingleton(ComputerPlayerProxy);
+			
+			var computerPlayerProxy:ComputerPlayerProxy = injector.getInstance(ComputerPlayerProxy) as ComputerPlayerProxy;
+			computerPlayerProxy.registerStrategy(SimpleStrategy, ResourceManager.getInstance().getString("Strings", "simple_strategy"));
+			computerPlayerProxy.registerStrategy(RandomStrategy, ResourceManager.getInstance().getString("Strings", "random_strategy"));
+			computerPlayerProxy.registerStrategy(GreedyStrategy, ResourceManager.getInstance().getString("Strings", "greedy_strategy"));
+			computerPlayerProxy.registerStrategy(ShallowStrategy, ResourceManager.getInstance().getString("Strings", "shallow_strategy"));
+			computerPlayerProxy.registerStrategy(MinimaxStrategy, ResourceManager.getInstance().getString("Strings", "minimax_strategy"));
 			
 			injector.mapSingleton(PlayerIOService);
 			

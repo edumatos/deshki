@@ -22,11 +22,15 @@ package ai
 	
 	import flash.utils.setTimeout;
 	
+	/**
+	 * Стратегия, при которой случайно выбирается одна из клеток,
+	 * в которую можно сделать ход.
+	 */
 	public class RandomStrategy extends AbstractStrategy
 	{
 		override public function doMove(game:Game):void
 		{
-			setTimeout(delayedHandler, 500, game);
+			setTimeout(delayedHandler, 250, game);
 		}
 		
 		private function delayedHandler(game:Game):void
