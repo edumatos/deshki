@@ -78,7 +78,6 @@ package mediators
 			var lastMove:Move = gameProxy.lastMove;
 			if(lastMove==null)
 			{
-				computerPlayerProxy.pickRandomStrategy();
 				localGameScreen.gameField.clearNumbers();
 			}
 			else
@@ -96,7 +95,7 @@ package mediators
 			localGameScreen.gameField.clearSelections();
 			if(gameProxy.state == Game.IN_PROGRESS)
 			{
-				localGameScreen.stateLabelText = ((gameProxy.lastMoveNumber+1)%2==0 ? ResourceManager.getInstance().getString("MyResources", "even_turn") : ResourceManager.getInstance().getString("MyResources", "odd_turn"));
+				localGameScreen.stateLabelText = ((gameProxy.lastMoveNumber+1)%2==0 ? ResourceManager.getInstance().getString("Strings", "even_turn") : ResourceManager.getInstance().getString("Strings", "odd_turn"));
 				if(gameProxy.current == GameProxy.HUMAN)
 				{
 					var moves:Vector.<Move> = gameProxy.getPossibleMoves();
@@ -105,7 +104,10 @@ package mediators
 				}
 				else if(gameProxy.current == GameProxy.COMPUTER)
 				{
-					computerPlayerProxy.doMove(gameProxy.game);
+					if((gameProxy.lastMoveNumber+1)%2==0)
+						computerPlayerProxy.evenDoMove(gameProxy.game);
+					else
+						computerPlayerProxy.oddDoMove(gameProxy.game);
 				}
 			}
 			else if(gameProxy.state == Game.EVEN_WON)
@@ -113,21 +115,21 @@ package mediators
 				if(gameProxy.hideHistory)
 					localGameScreen.gameField.showNumbers();
 				
-				localGameScreen.stateLabelText = ResourceManager.getInstance().getString("MyResources", "even_won");
+				localGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "even_won");
 			}
 			else if(gameProxy.state == Game.ODD_WON)
 			{
 				if(gameProxy.hideHistory)
 					localGameScreen.gameField.showNumbers();
 				
-				localGameScreen.stateLabelText = ResourceManager.getInstance().getString("MyResources", "odd_won");
+				localGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "odd_won");
 			}
 			else if(gameProxy.state == Game.DRAW)
 			{
 				if(gameProxy.hideHistory)
 					localGameScreen.gameField.showNumbers();
 				
-				localGameScreen.stateLabelText = ResourceManager.getInstance().getString("MyResources", "draw");
+				localGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "draw");
 			}
 		}
 		

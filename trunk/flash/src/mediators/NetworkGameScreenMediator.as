@@ -59,7 +59,7 @@ package mediators
 			eventMap.mapListener(eventDispatcher, RoomProxyEvent.USER_ROLES_CHANGED, userRolesChangedHandler, RoomProxyEvent);
 			eventMap.mapListener(eventDispatcher, RoomProxyEvent.USER_LEFT, userLeftHandler, RoomProxyEvent);
 			
-			networkGameScreen.stateLabelText = ResourceManager.getInstance().getString("MyResources", "wait_opponent");
+			networkGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "wait_opponent");
 		}
 		
 		override public function onRemove():void
@@ -129,14 +129,14 @@ package mediators
 			{
 				if(gameProxy.current==GameProxy.HUMAN)
 				{
-					networkGameScreen.stateLabelText = ResourceManager.getInstance().getString("MyResources", "your_turn");
+					networkGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "your_turn");
 					var moves:Vector.<Move> = gameProxy.getPossibleMoves();
 					for(var i:int=0; i<moves.length; ++i)
 						networkGameScreen.gameField.setSelection(moves[i].x, moves[i].y);
 				}
 				else
 				{
-					networkGameScreen.stateLabelText = ResourceManager.getInstance().getString("MyResources", "opponent_turn");
+					networkGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "opponent_turn");
 				}
 			}
 			else if(gameProxy.state == Game.EVEN_WON || gameProxy.state == Game.ODD_WON)
@@ -146,11 +146,11 @@ package mediators
 				
 				if((gameProxy.state == Game.EVEN_WON && roomProxy.myUserId==roomProxy.evenUserId) || (gameProxy.state == Game.ODD_WON && roomProxy.myUserId==roomProxy.oddUserId))
 				{
-					networkGameScreen.stateLabelText = ResourceManager.getInstance().getString("MyResources", "you_won");
+					networkGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "you_won");
 				}
 				else
 				{
-					networkGameScreen.stateLabelText = ResourceManager.getInstance().getString("MyResources", "you_lost");
+					networkGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "you_lost");
 				}
 			}
 			else if(gameProxy.state == Game.DRAW)
@@ -158,11 +158,11 @@ package mediators
 				if(gameProxy.hideHistory)
 					networkGameScreen.gameField.showNumbers();
 				
-				networkGameScreen.stateLabelText = ResourceManager.getInstance().getString("MyResources", "draw");
+				networkGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "draw");
 			}
 			else if(gameProxy.state == Game.WAITING)
 			{
-				networkGameScreen.stateLabelText = ResourceManager.getInstance().getString("MyResources", "wait_opponent");
+				networkGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "wait_opponent");
 			}
 		}
 	}

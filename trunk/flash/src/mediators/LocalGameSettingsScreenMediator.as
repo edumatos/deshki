@@ -24,13 +24,20 @@ package mediators
 	import org.robotlegs.base.ContextEvent;
 	import org.robotlegs.mvcs.Mediator;
 	
+	import proxies.ComputerPlayerProxy;
+	
 	public class LocalGameSettingsScreenMediator extends Mediator
 	{
 		[Inject]
 		public var localGameSettingsScreen:LocalGameSettingsScreen;
 		
+		[Inject]
+		public var computerPlayerProxy:ComputerPlayerProxy;
+		
 		override public function onRegister():void
 		{
+			localGameSettingsScreen.strategies = computerPlayerProxy.namesOfRegisteredStrategies;
+			
 			localGameSettingsScreen.startButtonClicked.add(startButtonClickedHandler);
 			localGameSettingsScreen.backToWelcomeButtonClicked.add(backToWelcomeScreenButtonClickedHandler);
 		}
@@ -41,9 +48,9 @@ package mediators
 			localGameSettingsScreen.backToWelcomeButtonClicked.remove(backToWelcomeScreenButtonClickedHandler);
 		}
 		
-		private function startButtonClickedHandler(isEvenHuman:Boolean, isOddHuman:Boolean, hideHistory:Boolean):void
+		private function startButtonClickedHandler(isEvenHuman:Boolean, isOddHuman:Boolean, hideHistory:Boolean, evenStrategy:String, oddStrategy:String):void
 		{
-			dispatch(new ContextEvent(ApplicationContext.DISPLAY_LOCAL_GAME_SCREEN, {isEvenHuman:isEvenHuman, isOddHuman:isOddHuman, hideHistory:hideHistory}));
+			dispatch(new ContextEvent(ApplicationContext.DISPLAY_LOCAL_GAME_SCREEN, {isEvenHuman:isEvenHuman, isOddHuman:isOddHuman, hideHistory:hideHistory, evenStrategy:evenStrategy, oddStrategy:oddStrategy}));
 		}
 		
 		private function backToWelcomeScreenButtonClickedHandler():void

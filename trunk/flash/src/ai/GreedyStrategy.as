@@ -22,11 +22,15 @@ package ai
 	
 	import flash.utils.setTimeout;
 
+	/**
+	 * Жадная стратегия.
+	 * Выбирается такой ход, при котором у соперника остаётся наименьший выбор ходов.
+	 */
 	public class GreedyStrategy extends AbstractStrategy
 	{
 		override public function doMove(game:Game):void
 		{
-			setTimeout(delayedHandler, 500, game);
+			setTimeout(delayedHandler, 250, game);
 		}
 		
 		private function delayedHandler(game:Game):void

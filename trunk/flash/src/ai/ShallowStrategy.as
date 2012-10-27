@@ -22,11 +22,18 @@ package ai
 	
 	import flash.utils.setTimeout;
 
+	/**
+	 * Поверхностная стратегия.
+	 * Алгоритм такой:
+	 * 1. Если можно победить одним ходом, то сделать это.
+	 * 2. Если таких ходов нет, то избегать ходов, которые дают сопернику возможность победить одним ходом.
+	 * 3. Если ходов не нашлось, то сделать случайный ход.
+	 */
 	public class ShallowStrategy extends AbstractStrategy
 	{
 		override public function doMove(game:Game):void
 		{
-			setTimeout(delayedHandler, 500, game);
+			setTimeout(delayedHandler, 250, game);
 		}
 		
 		private function delayedHandler(game:Game):void

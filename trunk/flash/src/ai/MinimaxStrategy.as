@@ -30,7 +30,10 @@ package ai
 	
 	import mx.resources.ResourceManager;
 
-	public class FullTreeMinimaxStrategy extends AbstractStrategy
+	/**
+	 * Стратегия минимакса на полном дереве игры.
+	 */
+	public class MinimaxStrategy extends AbstractStrategy
 	{
 		private var _loader:URLLoader;
 		private var _url:String = ResourceManager.getInstance().getString("Config", "minimax_move_url");
@@ -39,7 +42,7 @@ package ai
 		private var _url2:String = "http://localhost/deshki/move2.php";
 		private var _game:Game;*/
 		
-		public function FullTreeMinimaxStrategy()
+		public function MinimaxStrategy()
 		{
 			_loader = new URLLoader();
 			_loader.addEventListener(Event.COMPLETE, loaderCompleteHandler);
