@@ -17,6 +17,8 @@
 */
 package mediators
 {
+	import com.google.analytics.GATracker;
+	
 	import components.NetworkGameScreen;
 	
 	import context.ApplicationContext;
@@ -47,6 +49,9 @@ package mediators
 		
 		[Inject]
 		public var roomProxy:RoomProxy;
+		
+		[Inject]
+		public var tracker:GATracker;
 		
 		override public function onRegister():void
 		{
@@ -120,7 +125,13 @@ package mediators
 				else
 				{
 					if(gameProxy.hideHistory)
+					{
 						networkGameScreen.gameField.hideNumbers();
+					}
+					else
+					{
+						networkGameScreen.appendToHistory(gameProxy.formatLastMove());
+					}
 					networkGameScreen.gameField.setCell(lastMove.x, lastMove.y, String(gameProxy.lastMoveNumber));
 				}
 			}
@@ -152,6 +163,8 @@ package mediators
 				{
 					networkGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "you_lost");
 				}
+				
+				tracker.trackEvent("Network Game Screen", "Game Played", gameProxy.state == Game.EVEN_WON ? "Even Won" : "Odd Won");
 			}
 			else if(gameProxy.state == Game.DRAW)
 			{
@@ -159,6 +172,8 @@ package mediators
 					networkGameScreen.gameField.showNumbers();
 				
 				networkGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "draw");
+				
+				tracker.trackEvent("Network Game Screen", "Game Played", "Draw");
 			}
 			else if(gameProxy.state == Game.WAITING)
 			{

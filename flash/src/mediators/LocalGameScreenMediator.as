@@ -17,6 +17,8 @@
 */
 package mediators
 {
+	import com.google.analytics.GATracker;
+	
 	import components.LocalGameScreen;
 	
 	import context.ApplicationContext;
@@ -44,6 +46,9 @@ package mediators
 		
 		[Inject]
 		public var computerPlayerProxy:ComputerPlayerProxy;
+		
+		[Inject]
+		public var tracker:GATracker;
 		
 		override public function onRegister():void
 		{
@@ -116,6 +121,8 @@ package mediators
 					localGameScreen.gameField.showNumbers();
 				
 				localGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "even_won");
+				
+				tracker.trackEvent("Local Game Screen", "Game Played", "Even Won");
 			}
 			else if(gameProxy.state == Game.ODD_WON)
 			{
@@ -123,6 +130,8 @@ package mediators
 					localGameScreen.gameField.showNumbers();
 				
 				localGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "odd_won");
+				
+				tracker.trackEvent("Local Game Screen", "Game Played", "Odd Won");
 			}
 			else if(gameProxy.state == Game.DRAW)
 			{
@@ -130,6 +139,8 @@ package mediators
 					localGameScreen.gameField.showNumbers();
 				
 				localGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "draw");
+				
+				tracker.trackEvent("Local Game Screen", "Game Played", "Draw");
 			}
 		}
 		

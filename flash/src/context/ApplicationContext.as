@@ -23,6 +23,8 @@ package context
 	import ai.ShallowStrategy;
 	import ai.SimpleStrategy;
 	
+	import com.google.analytics.GATracker;
+	
 	import commands.ContextCommand;
 	import commands.PlayerIOServiceCommand;
 	
@@ -163,6 +165,7 @@ package context
 			injector.mapSingleton(GameProxy);
 			injector.mapSingleton(RoomProxy);
 			injector.mapSingleton(ComputerPlayerProxy);
+			injector.mapValue(GATracker, new GATracker(contextView, ResourceManager.getInstance().getString("Config", "ga_account"), ResourceManager.getInstance().getString("Config", "ga_mode")));
 			
 			var computerPlayerProxy:ComputerPlayerProxy = injector.getInstance(ComputerPlayerProxy) as ComputerPlayerProxy;
 			computerPlayerProxy.registerStrategy(SimpleStrategy, ResourceManager.getInstance().getString("Strings", "simple_strategy"));

@@ -20,6 +20,9 @@ package proxies
 	import entities.Game;
 	import entities.Move;
 	
+	import flash.globalization.DateTimeFormatter;
+	import flash.globalization.DateTimeStyle;
+	import flash.globalization.LocaleID;
 	import flash.utils.getTimer;
 	
 	import org.robotlegs.mvcs.Actor;
@@ -49,6 +52,8 @@ package proxies
 		private var _time:int;
 		private var _evenTime:int;
 		private var _oddTime:int;
+		
+		private var _lastMoveDate:Date;
 		
 		private var _hideHistory:Boolean;
 		
@@ -170,6 +175,7 @@ package proxies
 					_oddTime += t-_time;
 				_time = t;
 				
+				_lastMoveDate = new Date();
 				
 				_current = (_current==_even ? _odd : _even);
 				dispatch(new GameProxyEvent(GameProxyEvent.UPDATED));
@@ -180,7 +186,8 @@ package proxies
 		{
 			var move:Move = _game.lastMove;
 			var number:int = (move.y*4+move.x);
-			return _game.lastMoveNumber+". "+number.toString(10)+" ("+("0000"+number.toString(2)).substr(-4)+")";
+			var formatter:DateTimeFormatter = new DateTimeFormatter(LocaleID.DEFAULT, DateTimeStyle.SHORT, DateTimeStyle.MEDIUM);
+			return "["+formatter.format(_lastMoveDate)+"]\n"+_game.lastMoveNumber+". "+number.toString(10)+" ("+("0000"+number.toString(2)).substr(-4)+")";
 		}
 	}
 }

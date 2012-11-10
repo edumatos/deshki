@@ -17,6 +17,8 @@
 */
 package mediators
 {
+	import com.google.analytics.GATracker;
+	
 	import components.LobbyScreen;
 	
 	import context.ApplicationContext;
@@ -33,6 +35,9 @@ package mediators
 	{
 		[Inject]
 		public var lobbyScreen:LobbyScreen;
+		
+		[Inject]
+		public var tracker:GATracker;
 		
 		override public function onRegister():void
 		{
@@ -63,16 +68,19 @@ package mediators
 		
 		private function connectButtonClickedHandler(name:String):void
 		{
+			tracker.trackEvent("Lobby Screen", "Click", "Connect");
 			dispatch(new ContextEvent(ApplicationContext.CONNECT, name));
 		}
 		
 		private function createRoomButtonClickedHandler(name:String, hideHistory:Boolean):void
 		{
+			tracker.trackEvent("Lobby Screen", "Click", "Create Room");
 			dispatch(new ContextEvent(ApplicationContext.CREATE_ROOM, {name:name, hideHistory:hideHistory}));
 		}
 		
 		private function joinRoomButtonClickedHandler(roomInfo:RoomInfo):void
 		{
+			tracker.trackEvent("Lobby Screen", "Click", "Join Room");
 			dispatch(new ContextEvent(ApplicationContext.JOIN_ROOM, roomInfo));
 		}
 		
