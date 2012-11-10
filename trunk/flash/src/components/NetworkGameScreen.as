@@ -27,6 +27,7 @@ package components
 	
 	import razor.controls.Button;
 	import razor.controls.Label;
+	import razor.controls.TextArea;
 	import razor.core.ControlFactory;
 	
 	public class NetworkGameScreen extends Sprite
@@ -38,6 +39,7 @@ package components
 		private var _exitButton:Button;
 		private var _stateLabel:Label;
 		private var _status:Sprite;
+		private var _historyTextArea:TextArea;
 		
 		public var exitButtonClicked:Signal;
 		
@@ -59,11 +61,15 @@ package components
 			addChild(_stateLabel);
 			
 			_status = new Status;
-			_status["evenTF"].text = ResourceManager.getInstance().getString("Strings", "even");;
-			_status["oddTF"].text = ResourceManager.getInstance().getString("Strings", "odd");;
+			_status["evenTF"].text = ResourceManager.getInstance().getString("Strings", "even");
+			_status["oddTF"].text = ResourceManager.getInstance().getString("Strings", "odd");
 			_status["evenName"].text = "";
 			_status["oddName"].text = "";
 			addChild(_status);
+			
+			_historyTextArea = ControlFactory.create(TextArea) as TextArea;
+			_historyTextArea.setSize(200,100);
+			addChild(_historyTextArea);
 			
 			exitButtonClicked = new Signal();
 			
@@ -88,6 +94,12 @@ package components
 		public function set oddName(value:String):void
 		{
 			_status["oddName"].text = value;
+		}
+		
+		public function appendToHistory(line:String):void
+		{
+			_historyTextArea.text += (_historyTextArea.text.length>0 ? "\n" : "")+line;
+			_historyTextArea.textField.scrollV = _historyTextArea.textField.maxScrollV;
 		}
 		
 		public function setTimers(evenTime:Number, oddTime:Number):void
@@ -128,6 +140,8 @@ package components
 			
 			_status.x = 420;
 			_status.y = 40;
+			
+			_historyTextArea.move(stage.stageWidth-_historyTextArea.width, stage.stageHeight-_exitButton.height-_historyTextArea.height-2);
 		}
 		
 		private function exitButtonClickedHandler(e:Event):void

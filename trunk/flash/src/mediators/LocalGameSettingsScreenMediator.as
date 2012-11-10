@@ -17,6 +17,8 @@
 */
 package mediators
 {
+	import com.google.analytics.GATracker;
+	
 	import components.LocalGameSettingsScreen;
 	
 	import context.ApplicationContext;
@@ -34,6 +36,9 @@ package mediators
 		[Inject]
 		public var computerPlayerProxy:ComputerPlayerProxy;
 		
+		[Inject]
+		public var tracker:GATracker;
+		
 		override public function onRegister():void
 		{
 			localGameSettingsScreen.strategies = computerPlayerProxy.namesOfRegisteredStrategies;
@@ -50,6 +55,7 @@ package mediators
 		
 		private function startButtonClickedHandler(isEvenHuman:Boolean, isOddHuman:Boolean, hideHistory:Boolean, evenStrategy:String, oddStrategy:String):void
 		{
+			tracker.trackEvent("Local Game Settings Screen", "Click", "Start");
 			dispatch(new ContextEvent(ApplicationContext.DISPLAY_LOCAL_GAME_SCREEN, {isEvenHuman:isEvenHuman, isOddHuman:isOddHuman, hideHistory:hideHistory, evenStrategy:evenStrategy, oddStrategy:oddStrategy}));
 		}
 		

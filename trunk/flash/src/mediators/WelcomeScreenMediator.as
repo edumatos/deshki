@@ -17,6 +17,8 @@
 */
 package mediators
 {
+	import com.google.analytics.GATracker;
+	
 	import components.WelcomeScreen;
 	
 	import context.ApplicationContext;
@@ -28,6 +30,9 @@ package mediators
 	{
 		[Inject]
 		public var welcomeScreen:WelcomeScreen;
+		
+		[Inject]
+		public var tracker:GATracker;
 		
 		override public function onRegister():void
 		{
@@ -43,11 +48,13 @@ package mediators
 		
 		private function playLocallyButtonClickedHandler():void
 		{
+			tracker.trackEvent("Welcome Screen", "Click", "Play Locally");
 			dispatch(new ContextEvent(ApplicationContext.DISPLAY_LOCAL_GAME_SETTINGS_SCREEN));
 		}
 		
 		private function playNetworkButtonClickedHandler():void
 		{
+			tracker.trackEvent("Welcome Screen", "Click", "Play via Internet");
 			dispatch(new ContextEvent(ApplicationContext.DISPLAY_LOBBY_SCREEN));
 		}
 	}
