@@ -81,6 +81,7 @@ package mediators
 		private function gameProxyUpdated(e:GameProxyEvent):void
 		{
 			var lastMove:Move = gameProxy.lastMove;
+			localGameScreen.gameField.clearSelections();
 			if(lastMove==null)
 			{
 				localGameScreen.gameField.clearNumbers();
@@ -90,14 +91,12 @@ package mediators
 				if(gameProxy.hideHistory)
 				{
 					localGameScreen.gameField.hideNumbers();
+					localGameScreen.historyVisible = false;
 				}
-				else
-				{
-					localGameScreen.appendToHistory(gameProxy.formatLastMove());
-				}
+				localGameScreen.appendToHistory(gameProxy.formatLastMove());
 				localGameScreen.gameField.setCell(lastMove.x, lastMove.y, String(gameProxy.lastMoveNumber));
+				localGameScreen.gameField.setSelection(lastMove.x, lastMove.y);
 			}
-			localGameScreen.gameField.clearSelections();
 			if(gameProxy.state == Game.IN_PROGRESS)
 			{
 				localGameScreen.stateLabelText = ((gameProxy.lastMoveNumber+1)%2==0 ? ResourceManager.getInstance().getString("Strings", "even_turn") : ResourceManager.getInstance().getString("Strings", "odd_turn"));
@@ -118,7 +117,10 @@ package mediators
 			else if(gameProxy.state == Game.EVEN_WON)
 			{
 				if(gameProxy.hideHistory)
+				{
 					localGameScreen.gameField.showNumbers();
+					localGameScreen.historyVisible = true;
+				}
 				
 				localGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "even_won");
 				
@@ -127,7 +129,10 @@ package mediators
 			else if(gameProxy.state == Game.ODD_WON)
 			{
 				if(gameProxy.hideHistory)
+				{
 					localGameScreen.gameField.showNumbers();
+					localGameScreen.historyVisible = true;
+				}
 				
 				localGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "odd_won");
 				
@@ -136,7 +141,10 @@ package mediators
 			else if(gameProxy.state == Game.DRAW)
 			{
 				if(gameProxy.hideHistory)
+				{
 					localGameScreen.gameField.showNumbers();
+					localGameScreen.historyVisible = true;
+				}
 				
 				localGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "draw");
 				

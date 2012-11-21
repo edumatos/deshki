@@ -81,6 +81,11 @@ package components
 			_historyTextArea.textField.scrollV = _historyTextArea.textField.maxScrollV;
 		}
 		
+		public function set historyVisible(value:Boolean):void
+		{
+			_historyTextArea.visible = value;
+		}
+		
 		private function addedToStageHandler(e:Event):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);

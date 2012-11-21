@@ -102,6 +102,11 @@ package components
 			_historyTextArea.textField.scrollV = _historyTextArea.textField.maxScrollV;
 		}
 		
+		public function set historyVisible(value:Boolean):void
+		{
+			_historyTextArea.visible = value;
+		}
+		
 		public function setTimers(evenTime:Number, oddTime:Number):void
 		{
 			if(evenTime<=0.5)
