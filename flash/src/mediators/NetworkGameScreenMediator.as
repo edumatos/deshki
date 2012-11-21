@@ -115,6 +115,7 @@ package mediators
 		
 		private function gameProxyUpdated(e:GameProxyEvent):void
 		{
+			networkGameScreen.gameField.clearSelections();
 			if(!e.stateOnly)
 			{
 				var lastMove:Move = gameProxy.lastMove;
@@ -127,15 +128,13 @@ package mediators
 					if(gameProxy.hideHistory)
 					{
 						networkGameScreen.gameField.hideNumbers();
+						networkGameScreen.historyVisible = false;
 					}
-					else
-					{
-						networkGameScreen.appendToHistory(gameProxy.formatLastMove());
-					}
+					networkGameScreen.appendToHistory(gameProxy.formatLastMove());
 					networkGameScreen.gameField.setCell(lastMove.x, lastMove.y, String(gameProxy.lastMoveNumber));
+					networkGameScreen.gameField.setSelection(lastMove.x, lastMove.y);
 				}
 			}
-			networkGameScreen.gameField.clearSelections();
 			if(gameProxy.state == Game.IN_PROGRESS)
 			{
 				if(gameProxy.current==GameProxy.HUMAN)
@@ -153,7 +152,10 @@ package mediators
 			else if(gameProxy.state == Game.EVEN_WON || gameProxy.state == Game.ODD_WON)
 			{
 				if(gameProxy.hideHistory)
+				{
 					networkGameScreen.gameField.showNumbers();
+					networkGameScreen.historyVisible = true;
+				}
 				
 				if((gameProxy.state == Game.EVEN_WON && roomProxy.myUserId==roomProxy.evenUserId) || (gameProxy.state == Game.ODD_WON && roomProxy.myUserId==roomProxy.oddUserId))
 				{
@@ -169,7 +171,10 @@ package mediators
 			else if(gameProxy.state == Game.DRAW)
 			{
 				if(gameProxy.hideHistory)
+				{
 					networkGameScreen.gameField.showNumbers();
+					networkGameScreen.historyVisible = true;
+				}
 				
 				networkGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "draw");
 				
