@@ -95,7 +95,7 @@ package mediators
 				}
 				localGameScreen.appendToHistory(gameProxy.formatLastMove());
 				localGameScreen.gameField.setCell(lastMove.x, lastMove.y, String(gameProxy.lastMoveNumber));
-				localGameScreen.gameField.setSelection(lastMove.x, lastMove.y);
+				localGameScreen.gameField.setSelection(lastMove.x, lastMove.y, true);
 			}
 			if(gameProxy.state == Game.IN_PROGRESS)
 			{
