@@ -132,7 +132,7 @@ package mediators
 					}
 					networkGameScreen.appendToHistory(gameProxy.formatLastMove());
 					networkGameScreen.gameField.setCell(lastMove.x, lastMove.y, String(gameProxy.lastMoveNumber));
-					networkGameScreen.gameField.setSelection(lastMove.x, lastMove.y);
+					networkGameScreen.gameField.setSelection(lastMove.x, lastMove.y, true);
 				}
 			}
 			if(gameProxy.state == Game.IN_PROGRESS)
