@@ -57,6 +57,7 @@ package mediators
 		{
 			networkGameScreen.gameField.cellClicked.add(cellClickedHandler);
 			networkGameScreen.exitButtonClicked.add(exitButtonClickedHandler);
+			networkGameScreen.newGameButtonClicked.add(newGameButtonClickedHandler);
 			
 			networkGameScreen.addEventListener(Event.ENTER_FRAME, updateTimers);
 			
@@ -65,12 +66,14 @@ package mediators
 			eventMap.mapListener(eventDispatcher, RoomProxyEvent.USER_LEFT, userLeftHandler, RoomProxyEvent);
 			
 			networkGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "wait_opponent");
+			networkGameScreen.newGameButtonEnabled = false;
 		}
 		
 		override public function onRemove():void
 		{
 			networkGameScreen.gameField.cellClicked.remove(cellClickedHandler);
 			networkGameScreen.exitButtonClicked.remove(exitButtonClickedHandler);
+			networkGameScreen.newGameButtonClicked.remove(newGameButtonClickedHandler);
 			
 			networkGameScreen.removeEventListener(Event.ENTER_FRAME, updateTimers);
 		}
@@ -86,6 +89,12 @@ package mediators
 		private function exitButtonClickedHandler():void
 		{
 			dispatch(new ContextEvent(ApplicationContext.LEAVE_ROOM));
+		}
+		
+		private function newGameButtonClickedHandler():void
+		{
+			gameProxy.gotoWaitingState();
+			dispatch(new ContextEvent(ApplicationContext.SEND_READY));
 		}
 		
 		private function updateTimers(e:Event):void
@@ -137,6 +146,8 @@ package mediators
 			}
 			if(gameProxy.state == Game.IN_PROGRESS)
 			{
+				networkGameScreen.newGameButtonEnabled = false;
+				
 				if(gameProxy.current==GameProxy.HUMAN)
 				{
 					networkGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "your_turn");
@@ -151,6 +162,8 @@ package mediators
 			}
 			else if(gameProxy.state == Game.EVEN_WON || gameProxy.state == Game.ODD_WON)
 			{
+				networkGameScreen.newGameButtonEnabled = true;
+				
 				if(gameProxy.hideHistory)
 				{
 					networkGameScreen.gameField.showNumbers();
@@ -170,6 +183,8 @@ package mediators
 			}
 			else if(gameProxy.state == Game.DRAW)
 			{
+				networkGameScreen.newGameButtonEnabled = true;
+				
 				if(gameProxy.hideHistory)
 				{
 					networkGameScreen.gameField.showNumbers();
@@ -182,6 +197,8 @@ package mediators
 			}
 			else if(gameProxy.state == Game.WAITING)
 			{
+				networkGameScreen.newGameButtonEnabled = false;
+				
 				networkGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "wait_opponent");
 			}
 		}

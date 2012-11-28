@@ -25,6 +25,7 @@ using System.Drawing;
 namespace Deshki {
 	public class Player : BasePlayer {
         public TimeSpan time;
+        public bool ready;
 	}
 
 	[RoomType("Deshki")]
@@ -96,6 +97,9 @@ namespace Deshki {
                 case "Move":
                     HandleMove(player, message);
                     break;
+                case "Ready":
+                    HandleReady(player, message);
+                    break;
 			}
 		}
 
@@ -131,9 +135,44 @@ namespace Deshki {
                 _gameModel.DoMove(x, y);
 
                 if (_gameModel.CurrentState == GameModel.State.IN_PROGRESS)
-                   _timer = ScheduleCallback(TimerCallback, Math.Max(TOTAL_TIME - Convert.ToInt32(next.time.TotalMilliseconds), 0));
+                    _timer = ScheduleCallback(TimerCallback, Math.Max(TOTAL_TIME - Convert.ToInt32(next.time.TotalMilliseconds), 0));
+                else
+                {
+                    _oddPlayer.ready = false;
+                    _evenPlayer.ready = false;
+                }
 
                 Broadcast(message);
+            }
+        }
+
+        private void HandleReady(Player player, Message message)
+        {
+            if (_evenPlayer == null || _oddPlayer == null)
+                return;
+            if (_gameModel.CurrentState == GameModel.State.IN_PROGRESS)
+                return;
+
+            if (player == _evenPlayer)
+                _evenPlayer.ready = true;
+            else if (player == _oddPlayer)
+                _oddPlayer.ready = true;
+
+            if (_evenPlayer.ready && _oddPlayer.ready)
+            {
+                Player tmpPlayer = _evenPlayer;
+                _evenPlayer = _oddPlayer;
+                _oddPlayer = tmpPlayer;
+
+                bool hideHistory = Convert.ToBoolean(RoomData["hideHistory"]);
+                _gameModel.Reset(hideHistory);
+
+                _evenPlayer.time = new TimeSpan();
+                _oddPlayer.time = new TimeSpan();
+                _time = DateTime.Now;
+                _timer = ScheduleCallback(TimerCallback, TOTAL_TIME);
+
+                Broadcast("Start", hideHistory, _evenPlayer.Id, _oddPlayer.Id, TOTAL_TIME);
             }
         }
 

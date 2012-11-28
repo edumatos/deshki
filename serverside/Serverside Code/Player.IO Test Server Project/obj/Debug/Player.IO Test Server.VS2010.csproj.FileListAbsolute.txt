@@ -1,10 +1,10 @@
 E:\Work\deshki\serverside\Serverside Code\Player.IO Test Server Project\bin\Debug\Test Server.exe
 E:\Work\deshki\serverside\Serverside Code\Player.IO Test Server Project\bin\Debug\Test Server.pdb
+E:\Work\deshki\serverside\Serverside Code\Player.IO Test Server Project\bin\Debug\newGame.dll
 E:\Work\deshki\serverside\Serverside Code\Player.IO Test Server Project\bin\Debug\Player.IO Development Server.exe
 E:\Work\deshki\serverside\Serverside Code\Player.IO Test Server Project\bin\Debug\Player.IO GameLibrary.dll
+E:\Work\deshki\serverside\Serverside Code\Player.IO Test Server Project\bin\Debug\newGame.pdb
 E:\Work\deshki\serverside\Serverside Code\Player.IO Test Server Project\bin\Debug\Player.IO GameLibrary.xml
 E:\Work\deshki\serverside\Serverside Code\Player.IO Test Server Project\obj\Debug\ResolveAssemblyReference.cache
 E:\Work\deshki\serverside\Serverside Code\Player.IO Test Server Project\obj\Debug\Test Server.exe
 E:\Work\deshki\serverside\Serverside Code\Player.IO Test Server Project\obj\Debug\Test Server.pdb
-E:\Work\deshki\serverside\Serverside Code\Player.IO Test Server Project\bin\Debug\Deshki.dll
-E:\Work\deshki\serverside\Serverside Code\Player.IO Test Server Project\bin\Debug\Deshki.pdb
