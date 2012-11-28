@@ -36,12 +36,14 @@ package components
 		private var Status:Class;
 		
 		private var _gameField:GameField;
+		private var _newGameButton:Button;
 		private var _exitButton:Button;
 		private var _stateLabel:Label;
 		private var _status:Sprite;
 		private var _historyTextArea:TextArea;
 		
 		public var exitButtonClicked:Signal;
+		public var newGameButtonClicked:Signal;
 		
 		public function NetworkGameScreen()
 		{
@@ -55,6 +57,12 @@ package components
 			_exitButton.setSize(200, 30);
 			_exitButton.addEventListener(Button.E_CLICK, exitButtonClickedHandler);
 			addChild(_exitButton);
+			
+			_newGameButton = ControlFactory.create(Button) as Button;
+			_newGameButton.label = ResourceManager.getInstance().getString("Strings", "new_game");
+			_newGameButton.setSize(200, 30);
+			_newGameButton.addEventListener(Button.E_CLICK, newGameButtonClickedHandler);
+			addChild(_newGameButton);
 			
 			_stateLabel = ControlFactory.create(Label) as Label;
 			_stateLabel.setSize(200, 300);
@@ -72,6 +80,7 @@ package components
 			addChild(_historyTextArea);
 			
 			exitButtonClicked = new Signal();
+			newGameButtonClicked = new Signal();
 			
 			addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 		}
@@ -132,6 +141,16 @@ package components
 			}
 		}
 		
+		public function get newGameButtonEnabled():Boolean
+		{
+			return _newGameButton.enabled;
+		}
+		
+		public function set newGameButtonEnabled(value:Boolean):void
+		{
+			_newGameButton.enabled = value;
+		}
+		
 		private function addedToStageHandler(e:Event):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
@@ -141,17 +160,24 @@ package components
 			
 			_exitButton.move(stage.stageWidth-_exitButton.width, stage.stageHeight-_exitButton.height);
 			
+			_newGameButton.move(stage.stageWidth-_newGameButton.width, stage.stageHeight-_exitButton.height-_newGameButton.height-2);
+			
 			_stateLabel.move(stage.stageWidth-_stateLabel.width, 0);
 			
 			_status.x = 420;
 			_status.y = 40;
 			
-			_historyTextArea.move(stage.stageWidth-_historyTextArea.width, stage.stageHeight-_exitButton.height-_historyTextArea.height-2);
+			_historyTextArea.move(stage.stageWidth-_historyTextArea.width, stage.stageHeight-_exitButton.height-_newGameButton.height-_historyTextArea.height-4);
 		}
 		
 		private function exitButtonClickedHandler(e:Event):void
 		{
 			exitButtonClicked.dispatch();
+		}
+		
+		private function newGameButtonClickedHandler(e:Event):void
+		{
+			newGameButtonClicked.dispatch();
 		}
 	}
 }

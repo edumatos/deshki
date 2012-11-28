@@ -132,6 +132,10 @@ package context
 		 * body содержит Move.
 		 */
 		public static const SEND_MOVE:String = "sendMove";
+		/**
+		 * Отправить сообщение готовности.
+		 */
+		public static const SEND_READY:String = "sendReady";
 		
 		public function ApplicationContext(contextView:DisplayObjectContainer=null, autoStartup:Boolean=true)
 		{
@@ -153,6 +157,7 @@ package context
 			commandMap.mapEvent(REFRESH_ROOM_LIST, ContextCommand, ContextEvent);
 			commandMap.mapEvent(LEAVE_ROOM, ContextCommand, ContextEvent);
 			commandMap.mapEvent(DISPLAY_ALERT, ContextCommand, ContextEvent);
+			commandMap.mapEvent(SEND_READY, ContextCommand, ContextEvent);
 			
 			commandMap.mapEvent(PlayerIOServiceEvent.CONNECTED, PlayerIOServiceCommand, PlayerIOServiceEvent);
 			commandMap.mapEvent(PlayerIOServiceEvent.DISCONNECTED, PlayerIOServiceCommand, PlayerIOServiceEvent);

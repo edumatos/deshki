@@ -91,6 +91,10 @@ package commands
 					handleSendMove();
 					break;
 				
+				case ApplicationContext.SEND_READY:
+					handleSendReady();
+					break;
+				
 				case ApplicationContext.REFRESH_ROOM_LIST:
 					handleRefreshRoomList();
 					break;
@@ -180,6 +184,12 @@ package commands
 			var playerIOService:PlayerIOService = injector.getInstance(PlayerIOService) as PlayerIOService;
 			var move:Move = event.body as Move;
 			playerIOService.send("Move", move.x, move.y);
+		}
+		
+		private function handleSendReady():void
+		{
+			var playerIOService:PlayerIOService = injector.getInstance(PlayerIOService) as PlayerIOService;
+			playerIOService.send("Ready");
 		}
 		
 		private function handleRefreshRoomList():void
