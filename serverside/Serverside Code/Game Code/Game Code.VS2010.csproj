@@ -8,8 +8,8 @@
     <ProjectGuid>{9D801530-A9AF-4A0B-8639-B2DEB7D9E333}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ServersideGameCode</RootNamespace>
-    <AssemblyName>newGame</AssemblyName>
+    <RootNamespace>Deshki</RootNamespace>
+    <AssemblyName>Deshki</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -62,9 +62,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PostBuildEvent>Copy /Y "$(TargetDir)$(TargetFileName)" "$(SolutionDir)Output\$(TargetFileName)"</PostBuildEvent>
+    <PreBuildEvent>del "$(SolutionDir)Output\$(TargetFileName)"</PreBuildEvent>
   </PropertyGroup>
 </Project>
