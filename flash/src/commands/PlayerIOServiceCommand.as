@@ -130,6 +130,10 @@ package commands
 					handleUserLeft(message);
 					break;
 				
+				case "ChatMessage":
+					handleChatMessage(message);
+					break;
+				
 				case "Start":
 					handleStart(message);
 					break;
@@ -169,6 +173,12 @@ package commands
 		{
 			var roomProxy:RoomProxy = injector.getInstance(RoomProxy) as RoomProxy;
 			roomProxy.userLeft(roomProxy.getUserById(message.getInt(0)));
+		}
+		
+		private function handleChatMessage(message:Message):void
+		{
+			var roomProxy:RoomProxy = injector.getInstance(RoomProxy) as RoomProxy;
+			dispatch(new ContextEvent(ApplicationContext.MESSAGE_ARRIVED, {user:roomProxy.getUserById(message.getInt(0)).name, message:message.getString(1)}));
 		}
 		
 		private function handleStart(message:Message):void

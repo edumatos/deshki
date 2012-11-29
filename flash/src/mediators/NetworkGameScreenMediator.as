@@ -58,12 +58,14 @@ package mediators
 			networkGameScreen.gameField.cellClicked.add(cellClickedHandler);
 			networkGameScreen.exitButtonClicked.add(exitButtonClickedHandler);
 			networkGameScreen.newGameButtonClicked.add(newGameButtonClickedHandler);
+			networkGameScreen.sendButtonClicked.add(sendButtonClickedHandler);
 			
 			networkGameScreen.addEventListener(Event.ENTER_FRAME, updateTimers);
 			
 			eventMap.mapListener(eventDispatcher, GameProxyEvent.UPDATED, gameProxyUpdated, GameProxyEvent);
 			eventMap.mapListener(eventDispatcher, RoomProxyEvent.USER_ROLES_CHANGED, userRolesChangedHandler, RoomProxyEvent);
 			eventMap.mapListener(eventDispatcher, RoomProxyEvent.USER_LEFT, userLeftHandler, RoomProxyEvent);
+			eventMap.mapListener(eventDispatcher, ApplicationContext.MESSAGE_ARRIVED, chatMessageArrived, ContextEvent);
 			
 			networkGameScreen.stateLabelText = ResourceManager.getInstance().getString("Strings", "wait_opponent");
 			networkGameScreen.newGameButtonEnabled = false;
@@ -74,6 +76,7 @@ package mediators
 			networkGameScreen.gameField.cellClicked.remove(cellClickedHandler);
 			networkGameScreen.exitButtonClicked.remove(exitButtonClickedHandler);
 			networkGameScreen.newGameButtonClicked.remove(newGameButtonClickedHandler);
+			networkGameScreen.sendButtonClicked.remove(sendButtonClickedHandler);
 			
 			networkGameScreen.removeEventListener(Event.ENTER_FRAME, updateTimers);
 		}
@@ -95,6 +98,11 @@ package mediators
 		{
 			gameProxy.gotoWaitingState();
 			dispatch(new ContextEvent(ApplicationContext.SEND_READY));
+		}
+		
+		private function sendButtonClickedHandler(message:String):void
+		{
+			dispatch(new ContextEvent(ApplicationContext.SEND_MESSAGE, message));
 		}
 		
 		private function updateTimers(e:Event):void
@@ -120,6 +128,11 @@ package mediators
 			{
 				networkGameScreen.oddName = "";
 			}
+		}
+		
+		private function chatMessageArrived(e:ContextEvent):void
+		{
+			networkGameScreen.appendChatMessage(e.body.user as String, e.body.message as String);
 		}
 		
 		private function gameProxyUpdated(e:GameProxyEvent):void

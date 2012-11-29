@@ -95,6 +95,10 @@ package commands
 					handleSendReady();
 					break;
 				
+				case ApplicationContext.SEND_MESSAGE:
+					handleSendMessage();
+					break;
+				
 				case ApplicationContext.REFRESH_ROOM_LIST:
 					handleRefreshRoomList();
 					break;
@@ -190,6 +194,12 @@ package commands
 		{
 			var playerIOService:PlayerIOService = injector.getInstance(PlayerIOService) as PlayerIOService;
 			playerIOService.send("Ready");
+		}
+		
+		private function handleSendMessage():void
+		{
+			var playerIOService:PlayerIOService = injector.getInstance(PlayerIOService) as PlayerIOService;
+			playerIOService.send("ChatMessage", event.body);
 		}
 		
 		private function handleRefreshRoomList():void

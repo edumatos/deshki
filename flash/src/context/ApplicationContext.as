@@ -136,6 +136,16 @@ package context
 		 * Отправить сообщение готовности.
 		 */
 		public static const SEND_READY:String = "sendReady";
+		/**
+		 * Отправить сообщение из чата.
+		 * body содержит String с текстом сообщения.
+		 */
+		public static const SEND_MESSAGE:String = "sendMessage";
+		/**
+		 * Пришло сообщение в чат.
+		 * body содержит Object со свойствами: user(String) - имя пользователя, message(String) - сообщение.
+		 */
+		public static const MESSAGE_ARRIVED:String = "messageArrived";
 		
 		public function ApplicationContext(contextView:DisplayObjectContainer=null, autoStartup:Boolean=true)
 		{
@@ -158,6 +168,7 @@ package context
 			commandMap.mapEvent(LEAVE_ROOM, ContextCommand, ContextEvent);
 			commandMap.mapEvent(DISPLAY_ALERT, ContextCommand, ContextEvent);
 			commandMap.mapEvent(SEND_READY, ContextCommand, ContextEvent);
+			commandMap.mapEvent(SEND_MESSAGE, ContextCommand, ContextEvent);
 			
 			commandMap.mapEvent(PlayerIOServiceEvent.CONNECTED, PlayerIOServiceCommand, PlayerIOServiceEvent);
 			commandMap.mapEvent(PlayerIOServiceEvent.DISCONNECTED, PlayerIOServiceCommand, PlayerIOServiceEvent);
