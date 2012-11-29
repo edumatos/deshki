@@ -96,7 +96,7 @@ package components
 		public function setSelection(x:int, y:int, lastMove:Boolean = false):void
 		{
 			var selection:Shape = new Shape();
-			selection.graphics.lineStyle(lastMove ? 5 : 3,lastMove ? 0x000000 : 0xFF0000);
+			selection.graphics.lineStyle(lastMove ? 5 : 3,lastMove ? 0x000000 : 0x00AA00);
 			selection.graphics.drawRect(0,0,CELL_SIZE,CELL_SIZE);
 			selection.x = x*CELL_SIZE;
 			selection.y = y*CELL_SIZE;
