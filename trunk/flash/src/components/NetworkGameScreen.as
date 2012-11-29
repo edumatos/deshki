@@ -28,6 +28,7 @@ package components
 	import razor.controls.Button;
 	import razor.controls.Label;
 	import razor.controls.TextArea;
+	import razor.controls.TextInput;
 	import razor.core.ControlFactory;
 	
 	public class NetworkGameScreen extends Sprite
@@ -41,9 +42,13 @@ package components
 		private var _stateLabel:Label;
 		private var _status:Sprite;
 		private var _historyTextArea:TextArea;
+		private var _chatTextArea:TextArea;
+		private var _messageTextInput:TextInput;
+		private var _sendButton:Button;
 		
 		public var exitButtonClicked:Signal;
 		public var newGameButtonClicked:Signal;
+		public var sendButtonClicked:Signal;
 		
 		public function NetworkGameScreen()
 		{
@@ -79,8 +84,24 @@ package components
 			_historyTextArea.setSize(200,100);
 			addChild(_historyTextArea);
 			
+			_chatTextArea = ControlFactory.create(TextArea) as TextArea;
+			_chatTextArea.setSize(200,100);
+			addChild(_chatTextArea);
+			
+			_messageTextInput = ControlFactory.create(TextInput) as TextInput;
+			_messageTextInput.setSize(100, 30);
+			_messageTextInput.addEventListener(TextInput.E_ENTER, sendButtonClickedHandler);
+			addChild(_messageTextInput);
+			
+			_sendButton = ControlFactory.create(Button) as Button;
+			_sendButton.label = ResourceManager.getInstance().getString("Strings", "send");
+			_sendButton.setSize(100, 30);
+			_sendButton.addEventListener(Button.E_CLICK, sendButtonClickedHandler);
+			addChild(_sendButton);
+			
 			exitButtonClicked = new Signal();
 			newGameButtonClicked = new Signal();
+			sendButtonClicked = new Signal(String);
 			
 			addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 		}
@@ -151,6 +172,12 @@ package components
 			_newGameButton.enabled = value;
 		}
 		
+		public function appendChatMessage(user:String, message:String):void
+		{
+			_chatTextArea.text += (_chatTextArea.text.length>0 ? "\n" : "")+user+": "+message;
+			_chatTextArea.textField.scrollV = _chatTextArea.textField.maxScrollV;
+		}
+		
 		private function addedToStageHandler(e:Event):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
@@ -168,6 +195,12 @@ package components
 			_status.y = 40;
 			
 			_historyTextArea.move(stage.stageWidth-_historyTextArea.width, stage.stageHeight-_exitButton.height-_newGameButton.height-_historyTextArea.height-4);
+			
+			_messageTextInput.move(stage.stageWidth-_messageTextInput.width-100, _historyTextArea.y-_messageTextInput.height-2);
+			
+			_sendButton.move(stage.stageWidth-_sendButton.width, _historyTextArea.y-_sendButton.height-2);
+			
+			_chatTextArea.move(stage.stageWidth-_chatTextArea.width, _messageTextInput.y-_chatTextArea.height-2);
 		}
 		
 		private function exitButtonClickedHandler(e:Event):void
@@ -178,6 +211,14 @@ package components
 		private function newGameButtonClickedHandler(e:Event):void
 		{
 			newGameButtonClicked.dispatch();
+		}
+		
+		private function sendButtonClickedHandler(e:Event):void
+		{
+			if(_messageTextInput.text == "")
+				return;
+			sendButtonClicked.dispatch(_messageTextInput.text);
+			_messageTextInput.text = "";
 		}
 	}
 }
